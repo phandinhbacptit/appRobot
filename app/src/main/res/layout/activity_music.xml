@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_music"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id ="@+id/layoutHeader"
+        android:orientation="horizontal">
+
+    <ImageButton
+        android:id="@+id/btnMusicBack"
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="2dp"
+        android:background="@drawable/ic_back_icon"/>
+
+    <TextView
+        android:id="@+id/label_control"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="1dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/ic_music_header" />
+
+    <ImageButton
+        android:id="@+id/btnConnectBluetooth"
+        android:layout_width="13pt"
+        android:layout_height="13pt"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/ic_ble_off" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layoutHeader"
+        android:id="@+id/layout_horizontal_line"
+        android:background="@drawable/ic_thanhngang">
+    </RelativeLayout>
+
+<!--        Start layout outline piano-->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:background="@xml/relativelayout_radius_border">
+<!-- ________Layout button above piano___________-->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="180dp"
+                android:layout_height="60dp"
+                android:id="@+id/mornitor_display_piano"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@xml/display_color_property" >
+            </RelativeLayout>
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/btn_merry_chrismas"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/mornitor_display_piano"
+                android:background="@drawable/ic_pinetree"/>
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/btn_hpbd"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/btn_merry_chrismas"
+                android:background="@drawable/ic_hpbd"/>
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/btn_chicken"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/btn_hpbd"
+                android:background="@drawable/ic_chicken"/>
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/btn_star"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/btn_chicken"
+                android:background="@drawable/ic_star"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@xml/radius_border_gray2">
+        <RelativeLayout
+            android:id = "@+id/top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@xml/radius_border_gray2">
+        </RelativeLayout>
+        <!--       Layout white pianno button background2-->
+        <RelativeLayout
+            android:layout_below="@+id/top_layout"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" >
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="0.5"
+                        android:background="@xml/radius_border_white_bg_color" />
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="0.5"
+                        android:background="@xml/radius_border_white_bg_color" />
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="0.5"
+                        android:background="@xml/radius_border_white_bg_color" />
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="0.5"
+                        android:background="@xml/radius_border_white_bg_color" />
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="0.5"
+                        android:background="@xml/radius_border_white_bg_color" />
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="0.5"
+                        android:background="@xml/radius_border_white_bg_color" />
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="0.5"
+                        android:background="@xml/radius_border_white_bg_color" />
+                </LinearLayout>
+            </LinearLayout>
+<!--   _________Layout white button in piano ________-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal" >
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/c_sound"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_weight="0.5"
+                            android:background="@xml/white_piano_button" />
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/d_sound"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_weight="0.5"
+                            android:background="@xml/white_piano_button" />
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/e_sound"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_weight="0.5"
+                            android:background="@xml/white_piano_button" />
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/f_sound"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_weight="0.5"
+                            android:background="@xml/white_piano_button" />
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/g_sound"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_weight="0.5"
+                            android:background="@xml/white_piano_button" />
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/a_sound"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_weight="0.5"
+                            android:background="@xml/white_piano_button" />
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/b_sound"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_weight="0.5"
+                            android:background="@xml/white_piano_button" />
+                    </LinearLayout>
+                </LinearLayout>
+<!--            __________________End white button____________________-->
+<!-- ____Layout black pianno button background2_________________________-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="horizontal" >
+<!--                2 background button black-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="110dp"
+                android:layout_weight="0.5">
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="3dp"
+                    android:background="@xml/radius_border_gray3"/>
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:layout_marginLeft="34dp"
+                    android:layout_marginRight="7dp"
+                    android:background="@xml/radius_border_gray3"/>
+            </LinearLayout>
+<!--                3 background button black-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="65dp"
+                android:layout_weight="0.5">
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:layout_marginLeft="23dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@xml/radius_border_gray3"/>
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:layout_marginLeft="27dp"
+                    android:layout_marginRight="7dp"
+                    android:background="@xml/radius_border_gray3"/>
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@xml/radius_border_gray3"/>
+            </LinearLayout>
+        </LinearLayout>
+<!--        </LinearLayout>-->
+<!--       Layout black pianno button__________ -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal" >
+<!--                2  button black-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="110dp"
+                    android:layout_weight="0.5">
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/c_d_sound"
+                        android:layout_weight="0.5"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginRight="3dp"
+                        android:background="@xml/black_piano_button"/>
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/d_e_sound"
+                        android:layout_weight="0.5"
+                        android:layout_marginLeft="34dp"
+                        android:layout_marginRight="7dp"
+                        android:background="@xml/black_piano_button"/>
+                </LinearLayout>
+<!--                3  button black-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="65dp"
+                    android:layout_weight="0.5">
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/f_g_sound"
+                        android:layout_weight="0.5"
+                        android:layout_marginLeft="23dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@xml/black_piano_button"/>
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/g_a_sound"
+                        android:layout_weight="0.5"
+                        android:layout_marginLeft="27dp"
+                        android:layout_marginRight="7dp"
+                        android:background="@xml/black_piano_button"/>
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/a_b_sound"
+                        android:layout_weight="0.5"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginRight="2dp"
+                        android:background="@xml/black_piano_button"/>
+                </LinearLayout>
+            </LinearLayout>
+            <!--   _________Layout text in button black in piano ________-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="135dp"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal" >
+                <!--                2  button black-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="110dp"
+                    android:layout_weight="0.5">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginTop="50dp"
+                        android:textSize="23dp"
+                        android:textColor="@color/white"
+                        android:text="C/D" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="60dp"
+                        android:layout_marginTop="50dp"
+                        android:textSize="23dp"
+                        android:textColor="@color/white"
+                        android:text="D/E" />
+                </LinearLayout>
+                <!--                3  button black-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="65dp"
+                    android:layout_weight="0.5">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginTop="50dp"
+                        android:textSize="23dp"
+                        android:textColor="@color/white"
+                        android:text="F/G" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="60dp"
+                        android:layout_marginTop="50dp"
+                        android:textSize="23dp"
+                        android:textColor="@color/white"
+                        android:text="G/A" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="65dp"
+                        android:layout_marginTop="50dp"
+                        android:textSize="23dp"
+                        android:textColor="@color/white"
+                        android:text="A/B" />
+                </LinearLayout>
+            </LinearLayout>
+            <!--   _________Layout text in button white in piano ________-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginTop="150dp"
+                        android:textSize="30dp"
+                        android:textColor="@color/phy_stat"
+                        android:text="C" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="80dp"
+                        android:layout_marginTop="150dp"
+                        android:textSize="30dp"
+                        android:textColor="@color/black"
+                        android:text="D" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="85dp"
+                        android:layout_marginTop="150dp"
+                        android:textSize="30dp"
+                        android:textColor="@color/comp_end"
+                        android:text="E" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="90dp"
+                        android:layout_marginTop="150dp"
+                        android:textSize="30dp"
+                        android:textColor="@color/math_stat"
+                        android:text="F" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="80dp"
+                        android:layout_marginTop="150dp"
+                        android:textSize="30dp"
+                        android:textColor="@color/colorAcent"
+                        android:text="G" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="80dp"
+                        android:layout_marginTop="150dp"
+                        android:textSize="30dp"
+                        android:textColor="@color/math_end"
+                        android:text="A" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="70dp"
+                        android:layout_marginTop="150dp"
+                        android:textSize="30dp"
+                        android:textColor="@color/purple_200"
+                        android:text="B" />
+                </LinearLayout>
+            </LinearLayout>
+<!--            __________________End black button____________________-->
+        </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

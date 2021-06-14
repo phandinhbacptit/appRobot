@@ -17,6 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
+        <activity android:name=".show3DObject"></activity>
+        <activity android:name=".bluetoothHandler" />
         <activity
             android:name=".pdf_show"
             android:screenOrientation="landscape" />
@@ -41,6 +43,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".classicBluetooth"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.myapplication.classicBluetooth.LocalBinder;
+import com.example.myapplication.classicBluetooth.ConnectedBtThread;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -93,8 +95,8 @@ public class Control extends AppCompatActivity {
             {0x08,0x0c,0x0e,(byte)0xff,(byte)0xff,0x0e,0x0c,0x08}, // Mui ten sang phai
     };
 
-    private static final int REQUEST_ENABLE_BT = 1;
-    BluetoothAdapter bluetoothAdapter;
+//    private static final int REQUEST_ENABLE_BT = 1;
+//    BluetoothAdapter bluetoothAdapter;
     //    ArrayList<BluetoothDevice> pairedDeviceArrayList;
     RelativeLayout layout_joystick;
     ImageView image_joystick, image_border;
@@ -117,12 +119,22 @@ public class Control extends AppCompatActivity {
     byte[] byteBtn = {0,0,0,0};
     byte[] byteLightSensor = {0,0,0,0};
 
-    //    ArrayAdapter<BluetoothDevice> pairedDeviceAdapter;
-    private UUID myUUID;
-    private final String UUID_STRING_WELL_KNOWN_SPP =
-            "00001101-0000-1000-8000-00805F9B34FB";
+  classicBluetooth blueControl;
+  boolean stateBond = false;
 
-    ThreadConnectBTdevice myThreadConnectBTdevice;
+    private ServiceConnection ctrConnection = new ServiceConnection()
+    {
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder service) {
+           LocalBinder binder = (LocalBinder) service;
+            blueControl = binder.getService();
+            stateBond = true;
+        }
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            stateBond = false;
+        }
+    };
 
     public void setupMatrixData (byte data[]) {
         for (int j = 0; j <8; j++) {
@@ -134,24 +146,24 @@ public class Control extends AppCompatActivity {
             @Override
             public void run() {
                 if (module == "SRF05") {
-                    if (myThreadConnectBTdevice. getStateConnected()  != null) {
-                        myThreadConnectBTdevice. getStateConnected() .write(getSrf05);
-                    }
+//                    if (myThreadConnectBTdevice. getStateConnected()  != null) {
+//                        myThreadConnectBTdevice. getStateConnected() .write(getSrf05);
+//                    }
                 }
                 else if (module == "LIGHT") {
-                    if (myThreadConnectBTdevice. getStateConnected()  != null) {
-                        myThreadConnectBTdevice. getStateConnected() .write(getLight);
-                    }
+//                    if (myThreadConnectBTdevice. getStateConnected()  != null) {
+//                        myThreadConnectBTdevice. getStateConnected() .write(getLight);
+//                    }
                 }
                 else if (module == "LINE") {
-                    if (myThreadConnectBTdevice. getStateConnected()  != null) {
-                        myThreadConnectBTdevice. getStateConnected() .write(getLine);
-                    }
+//                    if (myThreadConnectBTdevice. getStateConnected()  != null) {
+//                        myThreadConnectBTdevice. getStateConnected() .write(getLine);
+//                    }
                 }
                 else if (module == "BTN") {
-                    if (myThreadConnectBTdevice. getStateConnected()  != null) {
-                        myThreadConnectBTdevice. getStateConnected() .write(getBtn);
-                    }
+//                    if (myThreadConnectBTdevice. getStateConnected()  != null) {
+//                        myThreadConnectBTdevice. getStateConnected() .write(getBtn);
+//                    }
                 }
             }
         };
@@ -245,6 +257,8 @@ public class Control extends AppCompatActivity {
         textServo2.setTypeface(null, Typeface.BOLD);
         servo2 = (SeekBar)findViewById(R.id.sbServo2);
 
+        Intent intent = new Intent(this, classicBluetooth.class);
+        bindService(intent, ctrConnection, Context.BIND_AUTO_CREATE);
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -263,13 +277,28 @@ public class Control extends AppCompatActivity {
         btnConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!bluetoothAdapter.isEnabled()) {
-//                    Toast.makeText(Control.this,"Bluetooth is diable", Toast.LENGTH_LONG).show();
-                    Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                    startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+                startService(new Intent(Control.this, classicBluetooth.class));
+                if (blueControl.get_state_blue_connect()) {
+                    btnConnect.setBackgroundResource(R.drawable.ic_ble_on);
+                    Toast.makeText(Control.this, "Connect successfull", Toast.LENGTH_LONG).show();
                 }
-                setup();
-            }
+                else {
+                    btnConnect.setBackgroundResource(R.drawable.ic_ble_off);
+                    Toast.makeText(Control.this, "Connect fail", Toast.LENGTH_LONG).show();
+                }
+
+//                 classBlue = new bluetoothHandler();
+//                if (classBlue.connect_to_bluetooth())
+//                    btnConnect.setBackgroundResource(R.drawable.ic_ble_on);
+//                else
+//                    btnConnect.setBackgroundResource(R.drawable.ic_ble_off);
+//                if (!bluetoothAdapter.isEnabled()) {
+////                    Toast.makeText(Control.this,"Bluetooth is diable", Toast.LENGTH_LONG).show();
+//                    Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+//                    startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+//                }
+//                setup();
+           }
         });
 
 //        btnDance.setOnClickListener(new View.OnClickListener() {
@@ -339,10 +368,14 @@ public class Control extends AppCompatActivity {
                         buf_on[11] = buf_on[23]= (byte)0xA0;
                         break;
                 }
-                if (myThreadConnectBTdevice. getStateConnected() != null) {
-                    //Toast.makeText(Control.this, "myThreadConnected no NULLt",Toast.LENGTH_LONG).show();
-                    myThreadConnectBTdevice. getStateConnected().write(buf_on);
+                if (blueControl.getConnectedState() != null) {
+                        Toast.makeText(Control.this, "myThreadConnected no NULLt",Toast.LENGTH_LONG).show();
+                        blueControl.getConnectedState().write(buf_on);
                 }
+//                if (myThreadConnectBTdevice. getStateConnected() != null) {
+//                    //Toast.makeText(Control.this, "myThreadConnected no NULLt",Toast.LENGTH_LONG).show();
+//                    myThreadConnectBTdevice. getStateConnected().write(buf_on);
+//                }
                 ledColor++;
                 if (ledColor > 6)
                     ledColor = 0;
@@ -356,8 +389,8 @@ public class Control extends AppCompatActivity {
                 if (cnt_effect >= 12)
                     cnt_effect = 0;
                 setupMatrixData (motion_effect[cnt_effect]);
-                if(myThreadConnectBTdevice. getStateConnected()  != null) {
-                    myThreadConnectBTdevice. getStateConnected() .write(ledMatrix);
+                if(blueControl.getConnectedState() != null) {
+                    blueControl.getConnectedState() .write(ledMatrix);
                 }
             }
         });
@@ -373,8 +406,8 @@ public class Control extends AppCompatActivity {
 
                 buzzer[8] = (byte) (buzzerDuration  & (byte)0xff);
                 buzzer[9] = (byte) ((buzzerDuration  >> 8) & (byte)0xff);
-                if (myThreadConnectBTdevice. getStateConnected()  != null) {
-                    myThreadConnectBTdevice. getStateConnected() .write(buzzer);
+                if (blueControl. getConnectedState()  != null) {
+                    blueControl. getConnectedState() .write(buzzer);
                 }
                 index++;
             }
@@ -472,17 +505,6 @@ public class Control extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
-        myUUID = UUID.fromString(UUID_STRING_WELL_KNOWN_SPP);
-
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (bluetoothAdapter == null) {
-            Toast.makeText(Control.this,
-                    "Bluetooth is not supported on this hardware platform",
-                    Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
-
         js = new joystick(getApplicationContext(), layout_joystick, R.drawable.joystick_center);
         js.setStickSize(180, 180);
         js.setLayoutSize(500, 500);
@@ -564,8 +586,8 @@ public class Control extends AppCompatActivity {
 
                 joyStick[8] = (byte) (rightSpeed  & (byte)0xff);
                 joyStick[9] = (byte) ((rightSpeed  >> 8) & (byte)0xff);
-                if (myThreadConnectBTdevice. getStateConnected() !=null) {
-                    myThreadConnectBTdevice. getStateConnected() .write(joyStick);
+                if (blueControl. getConnectedState() !=null) {
+                    blueControl. getConnectedState() .write(joyStick);
                 }
                 return true;
             }
@@ -600,58 +622,58 @@ public class Control extends AppCompatActivity {
 //            }
 //    };
 
-    private void setup( ) {
-        /*bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        //check to see if there is BT on the Android device at all
-        if (bluetoothAdapter == null){
-            int duration = Toast.LENGTH_SHORT;
-            Toast.makeText(this, "No Bluetooth on this handset", duration).show();
-        }
-        if (bluetoothAdapter.isDiscovering()){
-            bluetoothAdapter.cancelDiscovery();
-        }
-        //re-start discovery
-        bluetoothAdapter.startDiscovery();
-        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(mReceiver, filter);
-        */
-        Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
-        if (pairedDevices.size() > 0) {
-            for (BluetoothDevice device : pairedDevices) {
-                if (device.getName().equals("Robox")) {
-                    Toast.makeText(Control.this, "Start thread connect to bluetooth device", Toast.LENGTH_LONG).show();
-                    myThreadConnectBTdevice = new ThreadConnectBTdevice(device);
-                    myThreadConnectBTdevice.start();
-                    if (myThreadConnectBTdevice.getStatusConnect())
-                        btnConnect.setBackgroundResource(R.drawable.ic_ble_on);
-                    else
-                        btnConnect.setBackgroundResource(R.drawable.ic_ble_off);
-                }
-            }
-        }
-    }
-    @Override
-    protected void onDestroy()
-    {
-        super.onDestroy();
-//        if (myThreadConnectBTdevice!=null) {
-//            myThreadConnectBTdevice.cancel();
+//    private void setup( ) {
+//        /*bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+//        //check to see if there is BT on the Android device at all
+//        if (bluetoothAdapter == null){
+//            int duration = Toast.LENGTH_SHORT;
+//            Toast.makeText(this, "No Bluetooth on this handset", duration).show();
 //        }
-//        unregisterReceiver(mReceiver, filter);
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if (requestCode == REQUEST_ENABLE_BT) {
-            if (resultCode == Activity.RESULT_OK) {
-                setup();
-            }
-            else {
-                Toast.makeText(this, "BlueTooth NOT enabled", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        }
-    }
+//        if (bluetoothAdapter.isDiscovering()){
+//            bluetoothAdapter.cancelDiscovery();
+//        }
+//        //re-start discovery
+//        bluetoothAdapter.startDiscovery();
+//        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+//        registerReceiver(mReceiver, filter);
+//        */
+//        Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+//        if (pairedDevices.size() > 0) {
+//            for (BluetoothDevice device : pairedDevices) {
+//                if (device.getName().equals("Robox")) {
+//                    Toast.makeText(Control.this, "Start thread connect to bluetooth device", Toast.LENGTH_LONG).show();
+//                    myThreadConnectBTdevice = new ThreadConnectBTdevice(device);
+//                    myThreadConnectBTdevice.start();
+//                    if (myThreadConnectBTdevice.getStatusConnect())
+//                        btnConnect.setBackgroundResource(R.drawable.ic_ble_on);
+//                    else
+//                        btnConnect.setBackgroundResource(R.drawable.ic_ble_off);
+//                }
+//            }
+//        }
+//    }
+//    @Override
+//    protected void onDestroy()
+//    {
+//        super.onDestroy();
+////        if (myThreadConnectBTdevice!=null) {
+////            myThreadConnectBTdevice.cancel();
+////        }
+////        unregisterReceiver(mReceiver, filter);
+//    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+//    {
+//        if (requestCode == REQUEST_ENABLE_BT) {
+//            if (resultCode == Activity.RESULT_OK) {
+//                setup();
+//            }
+//            else {
+//                Toast.makeText(this, "BlueTooth NOT enabled", Toast.LENGTH_SHORT).show();
+//                finish();
+//            }
+//        }
+//    }
     //Called in ThreadConnectBTdevice once connect successed
     //to start ThreadConnected
 //    private void startThreadConnected(BluetoothSocket socket)

@@ -22,7 +22,7 @@ public class Music extends AppCompatActivity {
     View c_s, d_s, e_s, f_s, g_s, a_s, b_s;
     View c_d_s, d_e_s, f_g_s, g_a_s, a_b_s;
     BluetoothAdapter bluetoothAdapter;
-    ThreadConnectBTdevice myThreadConnectBTdevice;
+//    ThreadConnectBTdevice myThreadConnectBTdevice;
     byte[] C = {(byte)0xff, 0x55, 0x07, 0x0, 0x02, 0x09, 0x0d,0x02,(byte)0xfa,0x00};
     byte[] C_D = {(byte)0xff, 0x55, 0x07, 0x0, 0x02, 0x09, 0x2a,0x02,(byte)0xfa,0x00};
     byte[] D = {(byte)0xff, 0x55, 0x07, 0x0, 0x02, 0x09, 0x4b,0x02,(byte)0xfa,0x00};
@@ -80,124 +80,134 @@ public class Music extends AppCompatActivity {
         musicConnectBluetooth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                if (bluetoothAdapter == null) {
+                    Toast.makeText(Music.this,
+                            "Bluetooth is not supported on this hardware platform",
+                            Toast.LENGTH_LONG).show();
+                    finish();
+                    return;
+                }
+                
                 if (!bluetoothAdapter.isEnabled()) {
                     Toast.makeText(Music.this,"Bluetooth is diable", Toast.LENGTH_LONG).show();
-                    Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                    startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+//                    Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+//                    startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
                 }
-                setup();
+//                setup();
             }
         });
 
         c_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (myThreadConnectBTdevice. getStateConnected()  != null) {
-                    myThreadConnectBTdevice. getStateConnected() .write(C);
-                }
+//                if (myThreadConnectBTdevice. getStateConnected()  != null) {
+//                    myThreadConnectBTdevice. getStateConnected() .write(C);
+//                }
             }
         });
         d_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (myThreadConnectBTdevice. getStateConnected()  != null) {
-                    myThreadConnectBTdevice. getStateConnected() .write(D);
-                }
+//                if (myThreadConnectBTdevice. getStateConnected()  != null) {
+//                    myThreadConnectBTdevice. getStateConnected() .write(D);
+//                }
             }
         });
         e_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (myThreadConnectBTdevice. getStateConnected()  != null) {
-                    myThreadConnectBTdevice. getStateConnected() .write(E);
-                }
+//                if (myThreadConnectBTdevice. getStateConnected()  != null) {
+//                    myThreadConnectBTdevice. getStateConnected() .write(E);
+//                }
             }
         });
         f_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (myThreadConnectBTdevice. getStateConnected()  != null) {
-                    myThreadConnectBTdevice. getStateConnected() .write(F);
-                }
+//                if (myThreadConnectBTdevice. getStateConnected()  != null) {
+//                    myThreadConnectBTdevice. getStateConnected() .write(F);
+//                }
             }
         });
         g_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (myThreadConnectBTdevice. getStateConnected()  != null) {
-                    myThreadConnectBTdevice. getStateConnected() .write(G);
-                }
+//                if (myThreadConnectBTdevice. getStateConnected()  != null) {
+//                    myThreadConnectBTdevice. getStateConnected() .write(G);
+//                }
             }
         });
         a_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (myThreadConnectBTdevice. getStateConnected()  != null) {
-                    myThreadConnectBTdevice. getStateConnected() .write(A);
-                }
+//                if (myThreadConnectBTdevice. getStateConnected()  != null) {
+//                    myThreadConnectBTdevice. getStateConnected() .write(A);
+//                }
             }
         });
         b_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (myThreadConnectBTdevice. getStateConnected()  != null) {
-                    myThreadConnectBTdevice. getStateConnected() .write(B);
-                }
+//                if (myThreadConnectBTdevice. getStateConnected()  != null) {
+//                    myThreadConnectBTdevice. getStateConnected() .write(B);
+//                }
             }
         });
 
         c_d_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (myThreadConnectBTdevice. getStateConnected()  != null) {
-                    myThreadConnectBTdevice. getStateConnected() .write(C_D);
-                }
+//                if (myThreadConnectBTdevice. getStateConnected()  != null) {
+//                    myThreadConnectBTdevice. getStateConnected() .write(C_D);
+//                }
             }
         });
 
         d_e_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (myThreadConnectBTdevice. getStateConnected()  != null) {
-                    myThreadConnectBTdevice. getStateConnected() .write(D_E);
-                }
+//                if (myThreadConnectBTdevice. getStateConnected()  != null) {
+//                    myThreadConnectBTdevice. getStateConnected() .write(D_E);
+//                }
             }
         });
 
         f_g_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (myThreadConnectBTdevice. getStateConnected()  != null) {
-                    myThreadConnectBTdevice. getStateConnected() .write(F_G);
-                }
+//                if (myThreadConnectBTdevice. getStateConnected()  != null) {
+//                    myThreadConnectBTdevice. getStateConnected() .write(F_G);
+//                }
             }
         });
 
         g_a_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (myThreadConnectBTdevice. getStateConnected()  != null) {
-                    myThreadConnectBTdevice. getStateConnected() .write(G_A);
-                }
+//                if (myThreadConnectBTdevice. getStateConnected()  != null) {
+//                    myThreadConnectBTdevice. getStateConnected() .write(G_A);
+//                }
             }
         });
 
         a_b_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (myThreadConnectBTdevice. getStateConnected()  != null) {
-                    myThreadConnectBTdevice. getStateConnected() .write(A_B);
-                }
+//                if (myThreadConnectBTdevice. getStateConnected()  != null) {
+//                    myThreadConnectBTdevice. getStateConnected() .write(A_B);
+//                }
             }
         });
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (bluetoothAdapter == null) {
-            Toast.makeText(Music.this,
-                    "Bluetooth is not supported on this hardware platform",
-                    Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
+//        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+//        if (bluetoothAdapter == null) {
+//            Toast.makeText(Music.this,
+//                    "Bluetooth is not supported on this hardware platform",
+//                    Toast.LENGTH_LONG).show();
+//            finish();
+//            return;
+//        }
     }
 
     private void setup( )
@@ -207,31 +217,31 @@ public class Music extends AppCompatActivity {
             for (BluetoothDevice device : pairedDevices) {
                 if (device.getName().equals("Robox")) {
                     Toast.makeText(Music.this, "Start thread connect to bluetooth device", Toast.LENGTH_LONG).show();
-                    if (myThreadConnectBTdevice == null) {
-                        myThreadConnectBTdevice = new ThreadConnectBTdevice(device);
-                    }
-                    myThreadConnectBTdevice.start();
-                    if (myThreadConnectBTdevice.getStatusConnect())
-                        musicConnectBluetooth.setBackgroundResource(R.drawable.ic_ble_on);
-                    else
-                        musicConnectBluetooth.setBackgroundResource(R.drawable.ic_ble_off);
+//                    if (myThreadConnectBTdevice == null) {
+//                        myThreadConnectBTdevice = new ThreadConnectBTdevice(device);
+//                    }
+//                    myThreadConnectBTdevice.start();
+//                    if (myThreadConnectBTdevice.getStatusConnect())
+//                        musicConnectBluetooth.setBackgroundResource(R.drawable.ic_ble_on);
+//                    else
+//                        musicConnectBluetooth.setBackgroundResource(R.drawable.ic_ble_off);
                 }
             }
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if (requestCode == REQUEST_ENABLE_BT) {
-            if (resultCode == Activity.RESULT_OK) {
-                setup();
-            }
-            else {
-                Toast.makeText(this, "BlueTooth NOT enabled", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+//    {
+//        if (requestCode == REQUEST_ENABLE_BT) {
+//            if (resultCode == Activity.RESULT_OK) {
+//                setup();
+//            }
+//            else {
+//                Toast.makeText(this, "BlueTooth NOT enabled", Toast.LENGTH_SHORT).show();
+//                finish();
+//            }
+//        }
+//    }
 }
 

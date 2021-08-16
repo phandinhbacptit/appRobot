@@ -45,7 +45,7 @@ public class Mechanical extends AppCompatActivity {
         openMRangerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Mechanical.this, pdf_show.class));
+                startActivity(new Intent(Mechanical.this, picture_show.class));
             }
         });
     }

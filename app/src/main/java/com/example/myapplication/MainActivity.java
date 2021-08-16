@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
-    private  ImageView imageMachanical,  imageMusic, imageControl, imageProject;
+    private  ImageView imageMachanical,  imageMusic, imageControl, imageGuidle, imageProgram, imageExit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,33 +31,45 @@ public class MainActivity extends AppCompatActivity {
             );
         }
 
-        imageMachanical = (ImageView)findViewById((R.id.openMechanical));
-        imageMusic = (ImageView)findViewById((R.id.openMusic));
-        imageControl = (ImageView)findViewById((R.id.openControl));
-        imageProject = (ImageView)findViewById((R.id.openProject));
-        imageProject.setOnClickListener(new View.OnClickListener() {
+        imageMachanical = (ImageView)findViewById((R.id.btn_mechanical));
+        imageMusic = (ImageView)findViewById((R.id.btn_music));
+        imageControl = (ImageView)findViewById((R.id.btn_control));
+        imageProgram = (ImageView)findViewById((R.id.btn_program));
+        imageGuidle = (ImageView)findViewById((R.id.btn_guidle));
+        imageExit = (ImageView)findViewById((R.id.btn_exit));
 
+        imageExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openProject();
+                MainActivity.this.finishAffinity();
+                System.exit(1);
+            }
+        });
+        imageGuidle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGuidle();
+            }
+        });
+        imageProgram.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openProgram();
             }
         });
         imageMachanical.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 openMechanical();
             }
         });
         imageMusic.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 openMusic();
             }
         });
         imageControl.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 openControl();
@@ -72,12 +84,16 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Music.class);
         startActivity(intent);
     }
-    public void openProject() {
+    public void openProgram() {
         Intent intent = new Intent(this, Programming.class);
         startActivity(intent);
     }
     public void openControl() {
         Intent intent = new Intent(this, Control.class);
+        startActivity(intent);
+    }
+    public void openGuidle() {
+        Intent intent = new Intent(this, Guidle.class);
         startActivity(intent);
     }
 

@@ -4,89 +4,126 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_main_menu"
+    android:background="@drawable/background_main"
     app:layoutDescription="@xml/activity_main_scene"
     tools:context=".MainActivity">
 
-    <HorizontalScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_header">
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:orientation="horizontal">
+            android:orientation ="vertical"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:id="@+id/layout_line1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/line2"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/ic_line2" />
+            <TextView
+                android:id="@+id/logo"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/ic_logo" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:id="@id/line1"
+                android:background="@drawable/ic_line1" />
+        </RelativeLayout>
+    </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="425px"
-                android:layout_height="518px"
-                android:layout_gravity="center"
-                android:layout_marginLeft="100dp"
-                android:background="@drawable/mechanical"
-                android:orientation="horizontal">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layout_header"
+        android:orientation="horizontal"
+        android:stretchColumns="1,1"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp">
 
-                <ImageView
-                    android:id="@+id/openMechanical"
-                    android:layout_width="425px"
-                    android:layout_height="518px"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="0dp"
-                    android:padding="0dp"
-                    android:src="@drawable/menu_mechanical" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="433px"
-                android:layout_height="510px"
-                android:layout_gravity="center"
-                android:layout_marginLeft="250dp"
-                android:background="@drawable/mechanical"
-                android:orientation="horizontal"
-                android:padding="0dp">
-
-                <ImageView
-                    android:id="@+id/openMusic"
-                    android:layout_width="435px"
-                    android:layout_height="512px"
-                    android:padding="0dp"
-                    android:src="@drawable/menu_music" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="432px"
-                android:layout_height="510px"
-                android:layout_gravity="center"
-                android:layout_marginLeft="250dp"
-                android:orientation="horizontal"
-                android:padding="0dp">
-
-                <ImageView
-                    android:id="@+id/openProject"
-                    android:layout_width="434px"
-                    android:layout_height="512px"
-                    android:padding="0dp"
-                    android:src="@drawable/program_icon1" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="419px"
-                android:layout_height="503px"
-                android:layout_gravity="center"
-                android:layout_marginLeft="250dp"
-                android:layout_marginRight="100dp"
-                android:background="@drawable/mechanical"
-                android:orientation="horizontal"
-                android:padding="0dp">
-
-                <ImageView
-                    android:id="@+id/openControl"
-                    android:layout_width="417px"
-                    android:layout_height="505px"
-                    android:padding="0dp"
-                    android:src="@drawable/menu_control" />
-            </LinearLayout>
-
+        <LinearLayout
+            android:id="@+id/layoutLeft"
+            android:layout_width="350dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/ic_menu_bg">
+            <!--- ____________Start layout Programming________-->
+            <ImageButton
+                android:id="@+id/btn_program"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:background="@drawable/ic_program"/>
+        <!--- ____________Start layout Control________-->
+            <ImageButton
+                android:id="@+id/btn_control"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:background="@drawable/ic_control"/>
+        <!--- ____________Start layout Music_______-->
+            <ImageButton
+                android:id="@+id/btn_music"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:background="@drawable/ic_play_music"/>
+        <!--- ____________Start layout Mechanical________-->
+            <ImageButton
+                android:id="@+id/btn_mechanical"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:background="@drawable/ic_mechanical"/>
+        <!--- ____________Start layout Guidle________-->
+            <ImageButton
+                android:id="@+id/btn_guidle"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:background="@drawable/ic_guidle"/>
+        <!--- ____________Start layout Exit________-->
+            <ImageButton
+                android:id="@+id/btn_exit"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:background="@drawable/ic_btn_exit"/>
         </LinearLayout>
-    </HorizontalScrollView>
+
+        <LinearLayout
+            android:id="@+id/layoutRight"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/layoutLeft"
+            android:orientation="horizontal"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/ranzer_robot">
+        </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>

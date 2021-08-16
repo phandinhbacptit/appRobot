@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
 
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -17,8 +21,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".show3DObject"></activity>
+        <activity android:name=".show3DObject" />
         <activity android:name=".bluetoothHandler" />
+        <activity
+            android:name=".picture_show"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Guidle"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".connectingBluetooth"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".pdf_show"
             android:screenOrientation="landscape" />
@@ -36,7 +49,11 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".startApp"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

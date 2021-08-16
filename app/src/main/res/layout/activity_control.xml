@@ -75,7 +75,7 @@
                     android:layout_width="28pt"
                     android:layout_height="26pt"
                     android:layout_marginLeft="35dp"
-                    android:background="@drawable/matrix__config" />
+                    android:background="@drawable/ic_matrix" />
 
                     <ImageButton
                         android:id="@+id/btn_ledRGB"
@@ -102,7 +102,7 @@
                     android:layout_height="26pt"
                     android:layout_marginRight="100dp"
                     android:layout_marginTop="2dp"
-                    android:background="@drawable/ic_ringled" />
+                    android:background="@drawable/ic_ring_led" />
 
                 <ImageButton
                     android:id="@+id/btn_buzzer"
@@ -158,13 +158,19 @@
             android:layout_marginTop="1dp"
             android:orientation ="horizontal"
             android:layout_centerHorizontal="true" >
-            <ImageButton
+<!--            <ImageButton-->
+<!--                android:id="@+id/btnSound"-->
+<!--                android:layout_width="62pt"-->
+<!--                android:layout_height="12pt"-->
+<!--                android:layout_marginLeft="1dp"-->
+<!--                android:layout_marginTop="0dp"-->
+<!--                android:background="@drawable/ic_sound"/>-->
+            <pl.droidsonroids.gif.GifImageView
                 android:id="@+id/btnSound"
                 android:layout_width="62pt"
                 android:layout_height="12pt"
-                android:layout_marginLeft="1dp"
-                android:layout_marginTop="0dp"
-                android:background="@drawable/ic_sound" />
+                android:background="@drawable/ic_sound"/>
+
         </RelativeLayout>
         <!--- _____Start layout contain mode working of Ranzer_______-->
         <RelativeLayout
@@ -228,7 +234,7 @@
                     android:layout_below="@id/btnSoundMode"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="2dp"
-                    android:background="@drawable/ic_following_line" />
+                    android:background="@drawable/ic_line_mode" />
             </RelativeLayout>
             <!--- ______Stop layout Sound -line Mode________-->
 
@@ -271,21 +277,27 @@
             android:layout_marginTop="30dp"
             android:orientation ="horizontal"
             android:layout_centerHorizontal="true">
-
+            <TextView
+                android:id="@+id/line_left"
+                android:layout_width="23pt"
+                android:layout_height="20pt"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="0dp"
+                android:background="@drawable/ic_line_off"/>
             <ImageButton
                 android:id="@+id/btnIconLine"
-                android:layout_width="80pt"
-                android:layout_height="20pt"
-                android:layout_marginTop="0dp"
-                android:layout_marginLeft="60dp"
-                android:background="@drawable/ic_read_line" />
+                android:layout_width="40pt"
+                android:layout_height="16pt"
+                android:layout_marginLeft="42dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/ic_read_line"/>
             <TextView
-                android:id="@+id/text_line"
-                android:layout_width="80pt"
-                android:layout_height="20dp"
+                android:id="@+id/line_right"
+                android:layout_width="23pt"
+                android:layout_height="20pt"
                 android:layout_marginLeft="120dp"
-                android:layout_marginTop="10dp"
-                android:text="Read line"/>
+                android:layout_marginTop="0dp"
+                android:background="@drawable/ic_line_off"/>
         </RelativeLayout>
         <!--- ____________Start layout Read SRF05 Sensor________-->
         <RelativeLayout
@@ -306,7 +318,7 @@
             <TextView
                 android:id="@+id/text_srf05"
                 android:layout_width="80pt"
-                android:layout_height="12pt"
+                android:layout_height="20pt"
                 android:layout_marginLeft="120dp"
                 android:layout_marginTop="10dp"
                 android:text="Read srf05" />
@@ -377,7 +389,7 @@
                 android:id="@+id/val_servo1"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="70dp"
-                android:textColor="#ffff"
+                android:textColor="#58FFFF"
                 android:max = "360"
                 android:progress= "0"/>
             <SeekBar
@@ -387,7 +399,7 @@
                 android:layout_marginTop="100dp"
                 android:layout_marginRight="35dp"
                 android:progressBackgroundTint="#24b6ce"
-                android:progressTint="#ffffff"
+                android:progressTint="#58FFFF"
                 android:max = "360"
                 android:progress= "0"
                 android:thumb="@drawable/point" />
@@ -398,7 +410,7 @@
                 android:id="@+id/val_servo2"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="150dp"
-                android:textColor="#ffff"
+                android:textColor="#58FFFF"
                 android:max = "360"
                 android:progress= "0"/>
             <SeekBar
@@ -408,7 +420,7 @@
                 android:layout_marginTop="180dp"
                 android:layout_marginRight="35dp"
                 android:progressBackgroundTint="#24b6ce"
-                android:progressTint="#ffffff"
+                android:progressTint="#58FFFF"
                 android:max = "360"
                 android:progress= "0"
                 android:thumb="@drawable/point" />

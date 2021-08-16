@@ -20,7 +20,7 @@ import java.util.List;
 
 public class pdf_show extends Activity implements OnPageChangeListener,OnLoadCompleteListener {
     private static final String TAG = MainActivity.class.getSimpleName();
-    public static final String SAMPLE_FILE = "mechanical_ranger.pdf";
+    public static final String SAMPLE_FILE = "Introduce.pdf";
     public  static final int MIN_PAGE= 0, MAX_PAGE = 5;
     PDFView pdfView;
     ImageButton btnNext, btnPrevious, btnBack;

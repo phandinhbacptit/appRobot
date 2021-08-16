@@ -4,79 +4,174 @@
     xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_mechanical"
+        android:orientation="vertical"
+        android:background="@drawable/background_mechanical"
         tools:context=".MainActivity">
-
-    <ImageButton
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/back_icon"/>
+        android:id ="@+id/layoutHeader"
+        android:orientation="horizontal" >
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_back_icon"/>
+
+        <TextView
+            android:id="@+id/label_control"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="1dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/ic_text_mechanical"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:id="@+id/layout_horizontal_line"
+            android:background="@drawable/ic_thanhngang">
+        </RelativeLayout>
+    </RelativeLayout>
+
 
     <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_header">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="425px"
-                android:layout_height="518px"
+                android:layout_width="435px"
+                android:layout_height="wrap_content"
                 android:id="@+id/ranger_layout"
                 android:layout_gravity="center"
                 android:layout_marginLeft="100dp"
-                android:background="@drawable/mechanical"
-                android:orientation="horizontal">
-
+                android:orientation="vertical">
                 <ImageView
-                    android:id="@+id/ranger_mechanical"
+                    android:id="@+id/hanger_ranzer"
                     android:layout_width="425px"
-                    android:layout_height="378px"
+                    android:layout_height="138px"
                     android:layout_gravity="center"
                     android:layout_marginLeft="0dp"
                     android:padding="0dp"
-                    android:src="@drawable/ranzer" />
+                    android:src="@drawable/ic_hanger" />
+
+                <LinearLayout
+                    android:layout_width="435px"
+                    android:layout_height="460px"
+                    android:id="@+id/picture_layout1"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="0dp"
+                    android:background="@drawable/ic_tab_ranzer"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/ranger_mechanical"
+                        android:layout_width="360px"
+                        android:layout_height="360px"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="35dp"
+                        android:padding="0dp"
+                        android:src="@drawable/ranzer_robot" />
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout
-                android:layout_width="433px"
-                android:layout_height="510px"
+                android:layout_width="435px"
+                android:layout_height="wrap_content"
                 android:id="@+id/mini_layout"
                 android:layout_gravity="center"
-                android:layout_marginLeft="250dp"
-                android:background="@drawable/mechanical"
-                android:orientation="horizontal"
+                android:layout_marginLeft="200dp"
+                android:orientation="vertical"
                 android:padding="0dp">
 
-                <ImageView
-                    android:id="@+id/mini_mechanical"
+                <LinearLayout
                     android:layout_width="435px"
-                    android:layout_height="512px"
-                    android:padding="0dp"
-                    android:src="@drawable/ranzer" />
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rvs1_layout"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="0dp"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/hanger_rvs1"
+                        android:layout_width="425px"
+                        android:layout_height="138px"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="0dp"
+                        android:padding="0dp"
+                        android:src="@drawable/ic_hanger" />
+                    <LinearLayout
+                        android:layout_width="435px"
+                        android:layout_height="460px"
+                        android:id="@+id/rvs1_picture_layout1"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="0dp"
+                        android:background="@drawable/ic_tab_rvs"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/rvs1_mechanical"
+                            android:layout_width="360px"
+                            android:layout_height="360px"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="35dp"
+                            android:padding="0dp"
+                            android:src="@drawable/ranzer_robot" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="433px"
-                android:layout_height="510px"
+                android:layout_width="435px"
+                android:layout_height="wrap_content"
                 android:id="@+id/mini_layout2"
                 android:layout_gravity="center"
-                android:layout_marginLeft="250dp"
-                android:background="@drawable/mechanical"
+                android:layout_marginLeft="200dp"
+                android:layout_marginRight="200dp"
                 android:orientation="horizontal"
                 android:padding="0dp">
 
-                <ImageView
-                    android:id="@+id/mini_mechanical2"
+                <LinearLayout
                     android:layout_width="435px"
-                    android:layout_height="512px"
-                    android:padding="0dp"
-                    android:src="@drawable/ranzer" />
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rvs2_layout"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="0dp"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/hanger_rvs2"
+                        android:layout_width="425px"
+                        android:layout_height="138px"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="0dp"
+                        android:padding="0dp"
+                        android:src="@drawable/ic_hanger" />
+                    <LinearLayout
+                        android:layout_width="435px"
+                        android:layout_height="460px"
+                        android:id="@+id/rvs2_picture_layout1"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="0dp"
+                        android:background="@drawable/ic_tab_rvs"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/rvs2_mechanical"
+                            android:layout_width="360px"
+                            android:layout_height="360px"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="35dp"
+                            android:padding="0dp"
+                            android:src="@drawable/ranzer_robot" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </HorizontalScrollView>

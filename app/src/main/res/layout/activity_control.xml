@@ -139,7 +139,7 @@
                 android:layout_toRightOf="@+id/btnMode1"
                 android:layout_marginLeft="1dp"
                 android:layout_marginTop="0dp"
-                android:background="@drawable/ic_mode2" />
+                android:background="@drawable/ic_mode1" />
             <ImageButton
                 android:id="@+id/btnMode3"
                 android:layout_width="20pt"
@@ -147,7 +147,7 @@
                 android:layout_toRightOf="@+id/btnMode2"
                 android:layout_marginLeft="1dp"
                 android:layout_marginTop="0dp"
-                android:background="@drawable/ic_mode3" />
+                android:background="@drawable/ic_mode1" />
 
         </RelativeLayout>
         <RelativeLayout
@@ -274,51 +274,73 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/layoutGetLine"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="0dp"
             android:orientation ="horizontal"
             android:layout_centerHorizontal="true">
             <TextView
                 android:id="@+id/line_left"
-                android:layout_width="23pt"
-                android:layout_height="20pt"
+                android:layout_width="20pt"
+                android:layout_height="17pt"
                 android:layout_marginLeft="0dp"
                 android:layout_marginTop="0dp"
                 android:background="@drawable/ic_line_off"/>
             <ImageButton
                 android:id="@+id/btnIconLine"
                 android:layout_width="40pt"
-                android:layout_height="16pt"
-                android:layout_marginLeft="42dp"
-                android:layout_marginTop="4dp"
+                android:layout_height="17pt"
+                android:layout_marginLeft="39dp"
+                android:layout_marginTop="0dp"
                 android:background="@drawable/ic_read_line"/>
             <TextView
                 android:id="@+id/line_right"
-                android:layout_width="23pt"
-                android:layout_height="20pt"
+                android:layout_width="20pt"
+                android:layout_height="17pt"
                 android:layout_marginLeft="120dp"
                 android:layout_marginTop="0dp"
                 android:background="@drawable/ic_line_off"/>
+        </RelativeLayout>
+        <!--- ____________Start layout Read button, sound Sensor________-->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/layoutGetSoundButton"
+            android:layout_marginTop="42dp"
+            android:orientation ="horizontal"
+            android:layout_centerHorizontal="true">
+
+            <ImageButton
+                android:id="@+id/btnIconSound"
+                android:layout_width="35pt"
+                android:layout_height="18pt"
+                android:layout_marginLeft="0dp"
+                android:background="@drawable/ic_read_srf05" />
+            <ImageButton
+                android:id="@+id/btnIconButton"
+                android:layout_width="35pt"
+                android:layout_height="18pt"
+                android:layout_marginLeft="84dp"
+                android:background="@drawable/ic_read_srf05" />
         </RelativeLayout>
         <!--- ____________Start layout Read SRF05 Sensor________-->
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/layoutGetSrf05"
-            android:layout_marginTop="75dp"
+            android:layout_marginTop="84dp"
             android:orientation ="horizontal"
             android:layout_centerHorizontal="true">
 
             <ImageButton
                 android:id="@+id/btnIconSrf05"
-                android:layout_width="80pt"
-                android:layout_height="20pt"
+                android:layout_width="75pt"
+                android:layout_height="18pt"
                 android:layout_marginTop="0dp"
                 android:layout_marginLeft="60dp"
                 android:background="@drawable/ic_read_srf05" />
             <TextView
                 android:id="@+id/text_srf05"
-                android:layout_width="80pt"
-                android:layout_height="20pt"
+                android:layout_width="75pt"
+                android:layout_height="18pt"
                 android:layout_marginLeft="120dp"
                 android:layout_marginTop="10dp"
                 android:text="Read srf05" />
@@ -328,45 +350,46 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/layoutGetColor"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="126dp"
             android:orientation ="horizontal"
             android:layout_centerHorizontal="true">
 
             <ImageButton
                 android:id="@+id/btnIconColor"
-                android:layout_width="80pt"
-                android:layout_height="20pt"
+                android:layout_width="75pt"
+                android:layout_height="18pt"
                 android:layout_marginTop="0dp"
                 android:layout_marginLeft="60dp"
                 android:background="@drawable/ic_read_color" />
             <TextView
                 android:id="@+id/text_color"
-                android:layout_width="80pt"
-                android:layout_height="12pt"
+                android:layout_width="75pt"
+                android:layout_height="18pt"
                 android:layout_marginLeft="120dp"
                 android:layout_marginTop="10dp"
-                android:text="Read color" />
+                android:text="Read color"
+                android:textColor="#ffFFFF"/>
         </RelativeLayout>
         <!--- ____________Start layout Read Light  Sensor________-->
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/layoutGetLight"
-            android:layout_marginTop="165dp"
+            android:layout_marginTop="168dp"
             android:orientation ="horizontal"
             android:layout_centerHorizontal="true">
 
             <ImageButton
                 android:id="@+id/btnIconLight"
-                android:layout_width="80pt"
-                android:layout_height="20pt"
+                android:layout_width="75pt"
+                android:layout_height="18pt"
                 android:layout_marginTop="0dp"
                 android:layout_marginLeft="60dp"
                 android:background="@drawable/ic_read_light" />
             <TextView
                 android:id="@+id/text_light"
-                android:layout_width="80pt"
-                android:layout_height="12pt"
+                android:layout_width="75pt"
+                android:layout_height="18pt"
                 android:layout_marginLeft="120dp"
                 android:layout_marginTop="10dp"
                 android:text="Read light" />

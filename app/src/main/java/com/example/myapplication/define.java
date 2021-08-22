@@ -46,6 +46,12 @@ public class define {
     public static final int LEFT_ON = 1;
     public static final int RIGHT_ON = 2;
 
+    /*Define state mode button*/
+    public static final int MODE_OFF = 0;
+    public static final int MODE_1 = 1;
+    public static final int MODE_2 = 2;
+    public static final int MODE_3 = 3;
+
 
     /*Define command send to ESP32 to get value of sensor module*/
     public static byte[] cmd_get_valModule = {(byte)0xff, 0x55, 0x04, 0x00, GET, 0x00, 0,0,0,0,};
@@ -75,7 +81,7 @@ public class define {
     * JOY_STICK: header1(0) header2(1) length(2) id(3) action(4) device(5) left_speed(6<<7) right_speed(8<<9)
     * LED_MATRIX: header1(0) header2(1) length(2) id(3) action(4) device(5) dataMatrix(6->13) duration(14)
     * BUZZER: header1(0) header2(1) length(2) id(3) action(4) device(5) port(6) slot(7) freq(8<<9) duration(10<<11)*/
-    public static byte[] cmdRunModule = {(byte)0xff, 0x55, 0, 0, define.RUN, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    public static byte[] cmdRunModule = {(byte)0xff, 0x55, 0, 0, RUN, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
     public  static final int MAX_STEP_RANZER = 24;
 

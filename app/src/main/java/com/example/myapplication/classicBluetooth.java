@@ -25,11 +25,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -285,8 +290,9 @@ public class classicBluetooth  extends Service {
         private final InputStream inS;
         private final OutputStream outS;
         private int mByte;
-
-        private byte[] buffer = new byte[100];
+        ByteArrayOutputStream inputStream = new ByteArrayOutputStream( );
+        byte[] tmpData = new byte[100];
+        byte[] sendData =  new byte[100];
 
         public ConnectedBtThread(@NotNull BluetoothSocket socket){
             cSocket = socket;
@@ -314,12 +320,22 @@ public class classicBluetooth  extends Service {
             }
             while (true) {
                 try {
-                    Log.d("hhhh","read_data");
-                    mByte = inS.read(buffer);
-                    String dataSend = new String(buffer, charset);
-                    result.setAction(mBroadcastGetData);
-                    result.putExtra("fbData", dataSend);
-                    sendBroadcast(result);
+                    mByte = inS.read(tmpData);
+                    inputStream.write(tmpData,0, mByte);
+                    if(inputStream.size() >= 9) {
+                        sendData = inputStream.toByteArray();
+//                        final String msgReceived = String.format(String.format(String.format("%02X", sendData[0]) + String.format("%02X", sendData[1]) + String.format("%02X", sendData[2])
+//                                + String.format("%02X", sendData[3]) + String.format("%02X", sendData[4]) + String.format("%02X", sendData[5])
+//                                + String.format("%02X", sendData[6]) + String.format("%02X", sendData[7])
+//                                + String.format("%02X", sendData[8])));
+//
+//                        Log.i("mByte ", "--" + msgReceived);
+                        String dataSend = new String(sendData, charset);
+                        result.setAction(mBroadcastGetData);
+                        result.putExtra("fbData", dataSend);
+                        sendBroadcast(result);
+                        inputStream.reset();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -335,7 +351,7 @@ public class classicBluetooth  extends Service {
         }
 
         public byte[] read() {
-            return buffer;
+            return sendData;
         }
         public String readString() {
             return "hello";

@@ -55,9 +55,9 @@ public class Control extends AppCompatActivity {
     int buzzerFreq = 0, buzzerDuration = 0;
     int xPos, yPos, volumeSpeed;
     int index = 0;
-    boolean stateGetSrf05, stateGetLightSensor, stateGetLine, stateGetButton, stateGetColor;
+    boolean stateGetSrf05, stateGetLightSensor, stateGetLine, stateGetButton, stateGetColor, stateGetSound;
     int val = 0;
-    int cnt_effect;
+    int cnt_effect, cnt_effect_ring;
     Timer timer;
     RelativeLayout layout_joystick;
     ImageView image_joystick, image_border;
@@ -186,6 +186,7 @@ public class Control extends AppCompatActivity {
         btnGetLine = (ImageButton) findViewById(R.id.btnIconLine);
         btnGetBtn = (ImageButton) findViewById(R.id.btnIconButton);
         btnGetColor = (ImageButton) findViewById(R.id.btnIconColor);
+        btnGetSound = (ImageButton) findViewById(R.id.btnIconSound);
 
         showMode1 = (ImageButton) findViewById(R.id.btnMode1);
         showMode2 = (ImageButton) findViewById(R.id.btnMode2);
@@ -315,6 +316,18 @@ public class Control extends AppCompatActivity {
             }
         });
 
+        btnRingLed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cnt_effect_ring++;
+                if (cnt_effect_ring >= define.NUM_RING_EFFECT)
+                    cnt_effect_ring = 0;
+                shareFunction.runRingLed(0,0,0, define.ring_led_effect[cnt_effect_ring]);
+                if (blueControl.getInstance() != null) {
+                    blueControl.getInstance().write(define.cmdRunModule);
+                }
+            }
+        });
         btnLedMatrix.setOnClickListener(new View.OnClickListener() {
             int duration = 0x1a;
 
@@ -353,9 +366,10 @@ public class Control extends AppCompatActivity {
                     btnGetSrf05.setBackgroundResource(R.drawable.ic_read_srf05_select);
                     btnGetLine.setBackgroundResource(R.drawable.ic_read_line);
                     btnGetLight.setBackgroundResource(R.drawable.ic_read_light);
-                    btnGetBtn.setBackgroundResource(R.drawable.ic_read_srf05);
+                    btnGetBtn.setBackgroundResource(R.drawable.ic_read_button);
                     lineLeft.setBackgroundResource(R.drawable.ic_line_off);
                     lineRight.setBackgroundResource(R.drawable.ic_line_off);
+                    btnGetColor.setBackgroundResource(R.drawable.ic_read_color);
                 } else {
                     getData(define.NONE);
                     btnGetSrf05.setBackgroundResource(R.drawable.ic_read_srf05);
@@ -372,9 +386,11 @@ public class Control extends AppCompatActivity {
                     btnGetLine.setBackgroundResource(R.drawable.ic_read_line_select);
                     btnGetSrf05.setBackgroundResource(R.drawable.ic_read_srf05);
                     btnGetLight.setBackgroundResource(R.drawable.ic_read_light);
-                    btnGetBtn.setBackgroundResource(R.drawable.ic_read_srf05);
+                    btnGetBtn.setBackgroundResource(R.drawable.ic_read_button);
+                    btnGetSound.setBackgroundResource(R.drawable.ic_read_sound);
                     lineLeft.setBackgroundResource(R.drawable.ic_line_off);
                     lineRight.setBackgroundResource(R.drawable.ic_line_off);
+                    btnGetColor.setBackgroundResource(R.drawable.ic_read_color);
                 } else {
                     getData(define.NONE);
                     btnGetLine.setBackgroundResource(R.drawable.ic_read_line);
@@ -390,9 +406,10 @@ public class Control extends AppCompatActivity {
                     btnGetLight.setBackgroundResource(R.drawable.ic_read_light_select);
                     btnGetSrf05.setBackgroundResource(R.drawable.ic_read_srf05);
                     btnGetLine.setBackgroundResource(R.drawable.ic_read_line);
-                    btnGetBtn.setBackgroundResource(R.drawable.ic_read_srf05);
+                    btnGetBtn.setBackgroundResource(R.drawable.ic_read_button);
                     lineLeft.setBackgroundResource(R.drawable.ic_line_off);
                     lineRight.setBackgroundResource(R.drawable.ic_line_off);
+                    btnGetColor.setBackgroundResource(R.drawable.ic_read_color);
                 } else {
                     getData(define.NONE);
                     btnGetLight.setBackgroundResource(R.drawable.ic_read_light);
@@ -405,16 +422,39 @@ public class Control extends AppCompatActivity {
                 stateGetButton = !stateGetButton;
                 if (stateGetButton) {
                     getData(define.MODE_BTN);
-                    btnGetBtn.setBackgroundResource(R.drawable.ic_read_srf05_select);
+                    btnGetBtn.setBackgroundResource(R.drawable.ic_read_button_select);
                     btnGetSrf05.setBackgroundResource(R.drawable.ic_read_srf05);
                     btnGetLine.setBackgroundResource(R.drawable.ic_read_line);
                     btnGetLight.setBackgroundResource(R.drawable.ic_read_light);
                     lineLeft.setBackgroundResource(R.drawable.ic_line_off);
                     lineRight.setBackgroundResource(R.drawable.ic_line_off);
+                    btnGetSound.setBackgroundResource(R.drawable.ic_read_sound);
+                    btnGetColor.setBackgroundResource(R.drawable.ic_read_color);
                 } else {
                     getData(define.NONE);
-                    btnGetBtn.setBackgroundResource(R.drawable.ic_read_srf05);
+                    btnGetBtn.setBackgroundResource(R.drawable.ic_read_button);
                 }
+            }
+        });
+        btnGetSound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             stateGetSound = !stateGetSound;
+             if (stateGetSound) {
+                 getData(define.SOUND);
+                 btnGetSound.setBackgroundResource(R.drawable.ic_read_sound_select);
+                 btnGetBtn.setBackgroundResource(R.drawable.ic_read_button);
+                 btnGetSrf05.setBackgroundResource(R.drawable.ic_read_srf05);
+                 btnGetLine.setBackgroundResource(R.drawable.ic_read_line);
+                 btnGetLight.setBackgroundResource(R.drawable.ic_read_light);
+                 lineLeft.setBackgroundResource(R.drawable.ic_line_off);
+                 lineRight.setBackgroundResource(R.drawable.ic_line_off);
+                 btnGetColor.setBackgroundResource(R.drawable.ic_read_color);
+             }
+             else {
+                 getData(define.NONE);
+                 btnGetSound.setBackgroundResource(R.drawable.ic_read_sound);
+             }
             }
         });
         btnGetColor.setOnClickListener(new View.OnClickListener() {
@@ -422,9 +462,18 @@ public class Control extends AppCompatActivity {
             public void onClick(View v) {
                 stateGetColor = !stateGetColor;
                 if (stateGetColor) {
-                    soundSignal.setBackgroundResource(R.drawable.have_sound);
+                    getData(define.COLOR);
+                    btnGetColor.setBackgroundResource(R.drawable.ic_read_color_select);
+                    btnGetSound.setBackgroundResource(R.drawable.ic_read_sound);
+                    btnGetBtn.setBackgroundResource(R.drawable.ic_read_button);
+                    btnGetSrf05.setBackgroundResource(R.drawable.ic_read_srf05);
+                    btnGetLine.setBackgroundResource(R.drawable.ic_read_line);
+                    btnGetLight.setBackgroundResource(R.drawable.ic_read_light);
+                    lineLeft.setBackgroundResource(R.drawable.ic_line_off);
+                    lineRight.setBackgroundResource(R.drawable.ic_line_off);
                 } else {
-                    soundSignal.setBackgroundResource(R.drawable.ic_sound);
+                    getData(define.NONE);
+                    btnGetColor.setBackgroundResource(R.drawable.ic_read_color);
                 }
             }
         });
@@ -551,7 +600,6 @@ public class Control extends AppCompatActivity {
         });
 
     }
-    ;
     @Override
     protected void onStart() {
         super.onStart();
@@ -628,11 +676,48 @@ public class Control extends AppCompatActivity {
                         textColor.setText("");
                         textLight.setText(displayText);
                         break;
-                    case define.COLOR:
+                    case define.COLOR: {
                         textSrf05.setText("");
-                        textColor.setText(displayText);
                         textLight.setText("");
+                        switch ((int)shareFunction.byteArray2Float(fbData)) {
+                            case define.RED:
+                                btnGetColor.setBackgroundResource(R.drawable.ic_read_color_red);
+                                textColor.setText("Màu đỏ");
+                                break;
+                            case define.GREEN:
+                                btnGetColor.setBackgroundResource(R.drawable.ic_read_color_green);
+                                textColor.setText("Màu xanh lá");
+                                break;
+                            case define.BLUE:
+                                btnGetColor.setBackgroundResource(R.drawable.ic_read_color_blue);
+                                textColor.setText("Màu xanh lam");
+                                break;
+                            case define.YELLOW:
+                                btnGetColor.setBackgroundResource(R.drawable.ic_read_color_yellow);
+                                textColor.setText("Màu vàng");
+                                break;
+                            case define.WHITE:
+                                btnGetColor.setBackgroundResource(R.drawable.ic_read_color_white);
+                                textColor.setText("Màu trắng");
+                                break;
+                            case define.BLACK:
+                                btnGetColor.setBackgroundResource(R.drawable.ic_read_color_black);
+                                textColor.setText("Màu đen");
+                                break;
+                            default: {
+                                if (stateGetColor) {
+                                    btnGetColor.setBackgroundResource(R.drawable.ic_read_color_select);
+                                    textColor.setText("Màu ?");
+                                }
+                                else {
+                                    btnGetColor.setBackgroundResource(R.drawable.ic_read_color);
+                                    textColor.setText(" ");
+                                }
+                                break;
+                            }
+                        }
                         break;
+                    }
                     case define.MODE_BTN:{
                         textSrf05.setText("");
                         textColor.setText(displayText);
@@ -661,9 +746,17 @@ public class Control extends AppCompatActivity {
                         }
                         break;
                     }
-                    case define.SOUND:
+                    case define.SOUND: {
+                        textSrf05.setText("");
+                        textColor.setText(displayText);
+                        textLight.setText("");
+                        if (shareFunction.byteArray2Float(fbData) >= 1) {
+                            soundSignal.setBackgroundResource(R.drawable.have_sound);
+                        } else {
+                            soundSignal.setBackgroundResource(R.drawable.ic_sound);
+                        }
                         break;
-
+                    }
                     default:
                         break;
                 }

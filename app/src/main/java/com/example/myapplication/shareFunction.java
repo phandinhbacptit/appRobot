@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.media.Ringtone;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
@@ -14,6 +15,9 @@ import com.example.myapplication.classicBluetooth.LocalBinder;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 public class shareFunction extends AppCompatActivity {
 
@@ -59,7 +63,28 @@ public class shareFunction extends AppCompatActivity {
         define.cmdRunModule[8] = (byte)id;
         System.arraycopy(color, 0, define.cmdRunModule, 9, color.length);
     }
+    public static void runRingLed(int id, int port, int slot, long[]affectLed)
+    {
+        //Vector<Byte> ringCode = new Vector<Byte>();
+        byte[] tmp = new byte [36];
 
+        List<Byte> ringCode = new ArrayList();
+        define.cmdRunModule[2] =  0x2d;
+        define.cmdRunModule[3] = (byte)id;
+        define.cmdRunModule[5] = define.RING_LED;
+        define.cmdRunModule[6] = (byte)port;
+        define.cmdRunModule[7] = (byte)slot;
+        define.cmdRunModule[8] = (byte)id;
+
+        for (int i = 0; i < 12; i++) {
+            tmp[i*3 +0] = (byte)(affectLed[i]>>16);
+            tmp[i*3 +1] = (byte)(affectLed[i]>>8);
+            tmp[i*3 +2] = (byte)(affectLed[i]);
+        }
+        Log.i("code", String.format("%02X", tmp[0]) + String.format("%02X", tmp[1]) + String.format("%02X", tmp[2])
+                             + String.format("%02X", tmp[3]) + String.format("%02X", tmp[4]) + String.format("%02X", tmp[5]));
+        System.arraycopy(tmp, 0, define.cmdRunModule, 9, tmp.length);
+    }
     public static void runMaTrix(int id, int port, int slot, byte[] effect, int duration)
     {
         define.cmdRunModule[2] =  0x0e;

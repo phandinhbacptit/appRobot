@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import java.util.Vector;
+
 public class define {
 
     /*Define sensor feedback data*/
@@ -14,6 +16,7 @@ public class define {
     public static final int LED_RGB = 8;
     public static final int BUZZER = 9;
     public static final int SOUND = 10;
+    public static final int RING_LED = 11;
 
 
     /*Define RGB LED color*/
@@ -24,6 +27,7 @@ public class define {
     public static final int PURPLE = 5;
     public static final int PINK = 6;
     public static final int WHITE = 7;
+    public static final int BLACK = 8;
 
 
     /*Define Code RGB LED color*/
@@ -71,6 +75,11 @@ public class define {
             {0x18,0x18,0x18,0x18,(byte)0xff,0x7e,0x3c,0x18}, // Mui ten di xuong
             {0x08,0x0c,0x0e,(byte)0xff,(byte)0xff,0x0e,0x0c,0x08}, // Mui ten sang phai
     };
+    public static int NUM_RING_EFFECT = 1;
+    /*Define Ring led effect*/
+    public static long ring_led_effect [][] = {
+            {(long)0x000001, (long)0x000000 , (long)0x000000 , (long)0x000000, (long)0x000000, (long)0x000000, (long)0x000000 , (long)0x000000, (long)0x000000, (long)0x000000, (long)0x000000, (long)0x000000},
+    };
     /*Define song for buzzer*/
     public static int [] hpbdSong= {525, 525, 587, 525, 698, 659, 525,525, 587, 525,784, 698, 525, 525, 987, 880, 698, 659, 587, 932, 932, 880, 698, 784, 698};
     /* header1(0) header2(1) length(2) id(3) action(4) device(5)
@@ -81,8 +90,8 @@ public class define {
     * JOY_STICK: header1(0) header2(1) length(2) id(3) action(4) device(5) left_speed(6<<7) right_speed(8<<9)
     * LED_MATRIX: header1(0) header2(1) length(2) id(3) action(4) device(5) dataMatrix(6->13) duration(14)
     * BUZZER: header1(0) header2(1) length(2) id(3) action(4) device(5) port(6) slot(7) freq(8<<9) duration(10<<11)*/
-    public static byte[] cmdRunModule = {(byte)0xff, 0x55, 0, 0, RUN, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-
+    public static byte[] cmdRunModule = {(byte)0xff, 0x55, 0, 0, RUN, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                                            , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     public  static final int MAX_STEP_RANZER = 24;
 
 }

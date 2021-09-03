@@ -281,22 +281,22 @@
                 android:id="@+id/line_left"
                 android:layout_width="20pt"
                 android:layout_height="17pt"
-                android:layout_marginLeft="0dp"
+                android:layout_marginLeft="2dp"
                 android:layout_marginTop="0dp"
                 android:background="@drawable/ic_line_off"/>
             <ImageButton
                 android:id="@+id/btnIconLine"
                 android:layout_width="40pt"
-                android:layout_height="17pt"
+                android:layout_height="15pt"
                 android:layout_marginLeft="39dp"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="3dp"
                 android:background="@drawable/ic_read_line"/>
             <TextView
                 android:id="@+id/line_right"
                 android:layout_width="20pt"
                 android:layout_height="17pt"
                 android:layout_marginLeft="120dp"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="1dp"
                 android:background="@drawable/ic_line_off"/>
         </RelativeLayout>
         <!--- ____________Start layout Read button, sound Sensor________-->
@@ -310,16 +310,16 @@
 
             <ImageButton
                 android:id="@+id/btnIconSound"
-                android:layout_width="35pt"
+                android:layout_width="43pt"
                 android:layout_height="18pt"
-                android:layout_marginLeft="0dp"
-                android:background="@drawable/ic_read_srf05" />
+                android:layout_marginLeft="2dp"
+                android:background="@drawable/ic_read_sound" />
             <ImageButton
                 android:id="@+id/btnIconButton"
-                android:layout_width="35pt"
+                android:layout_width="39pt"
                 android:layout_height="18pt"
-                android:layout_marginLeft="84dp"
-                android:background="@drawable/ic_read_srf05" />
+                android:layout_marginLeft="82dp"
+                android:background="@drawable/ic_read_button" />
         </RelativeLayout>
         <!--- ____________Start layout Read SRF05 Sensor________-->
         <RelativeLayout
@@ -365,8 +365,8 @@
                 android:id="@+id/text_color"
                 android:layout_width="75pt"
                 android:layout_height="18pt"
-                android:layout_marginLeft="120dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="110dp"
+                android:layout_marginTop="8dp"
                 android:text="Read color"
                 android:textColor="#ffFFFF"/>
         </RelativeLayout>

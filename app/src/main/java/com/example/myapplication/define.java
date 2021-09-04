@@ -18,6 +18,13 @@ public class define {
     public static final int SOUND = 10;
     public static final int RING_LED = 11;
 
+    public static final int LINE_DETECT_MODE = 100;
+    public static final int LINE_CIRCLE_MODE = 101;
+    public static final int SOUND_FOLLOW_MODE = 102;
+    public static final int SRF05_RUN_MODE = 103;
+    public static final int NORMAL_MODE = 104;
+
+
 
     /*Define RGB LED color*/
     public static final int RED = 1;

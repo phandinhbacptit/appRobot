@@ -45,6 +45,7 @@ public class Control extends AppCompatActivity {
     ImageButton backCtrBtn;
     ImageButton btnDance, btnLed, btnConnect, btnBuzzer, btnLedMatrix, btnRingLed;
     ImageButton btnGetSrf05, btnGetLine, btnGetColor, btnGetSound, btnGetLight, btnGetBtn;
+    ImageButton btnModeSrf05, btnModeSoundDetect, btnModeFollwingLine, btnModeRunCircle;
     TextView textSrf05, textLight, textColor, textSound, textServo1, textServo2, lineRight, lineLeft;
     ImageButton showMode1, showMode2, showMode3;
     pl.droidsonroids.gif.GifImageView soundSignal;
@@ -56,6 +57,7 @@ public class Control extends AppCompatActivity {
     int xPos, yPos, volumeSpeed;
     int index = 0;
     boolean stateGetSrf05, stateGetLightSensor, stateGetLine, stateGetButton, stateGetColor, stateGetSound;
+    boolean stateRunFollowingLine, stateRunInCircle, stateRunSrf05, stateRunSoundMode;
     int val = 0;
     int cnt_effect, cnt_effect_ring;
     Timer timer;
@@ -187,6 +189,11 @@ public class Control extends AppCompatActivity {
         btnGetBtn = (ImageButton) findViewById(R.id.btnIconButton);
         btnGetColor = (ImageButton) findViewById(R.id.btnIconColor);
         btnGetSound = (ImageButton) findViewById(R.id.btnIconSound);
+
+        btnModeFollwingLine = (ImageButton) findViewById(R.id.btnLineMode);
+        btnModeRunCircle = (ImageButton) findViewById(R.id.btnRoundMode);
+        btnModeSoundDetect = (ImageButton) findViewById(R.id.btnSoundMode);
+        btnModeSrf05 = (ImageButton) findViewById(R.id.btnSRF05Mode);
 
         showMode1 = (ImageButton) findViewById(R.id.btnMode1);
         showMode2 = (ImageButton) findViewById(R.id.btnMode2);
@@ -354,6 +361,94 @@ public class Control extends AppCompatActivity {
                     blueControl.getInstance().write(define.cmdRunModule);
                 }
                 index++;
+            }
+        });
+
+        btnModeSrf05.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stateRunSrf05 = !stateRunSrf05;
+                if (stateRunSrf05) {
+                    define.cmdRunModule[5] = define.SRF05_RUN_MODE;
+                    btnModeSrf05.setBackgroundResource(R.drawable.ic_srf05_mode_select);
+                    btnModeSoundDetect.setBackgroundResource(R.drawable.ic_sound_mode);
+                    btnModeFollwingLine.setBackgroundResource(R.drawable.ic_line_mode);
+                    btnModeRunCircle.setBackgroundResource(R.drawable.ic_round_mode);
+                }
+                else {
+                    define.cmdRunModule[5] = define.NORMAL_MODE;
+                    btnModeSrf05.setBackgroundResource(R.drawable.ic_srf05_mode);
+                }
+
+                if (blueControl.getInstance() != null) {
+                    blueControl.getInstance().write(define.cmdRunModule);
+                }
+            }
+        });
+
+        btnModeSoundDetect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stateRunSoundMode = !stateRunSoundMode;
+                if (stateRunSoundMode) {
+                    define.cmdRunModule[5] = define.SOUND_FOLLOW_MODE;
+                    btnModeSoundDetect.setBackgroundResource(R.drawable.ic_sound_mode_select);
+                    btnModeSrf05.setBackgroundResource(R.drawable.ic_srf05_mode);
+                    btnModeFollwingLine.setBackgroundResource(R.drawable.ic_line_mode);
+                    btnModeRunCircle.setBackgroundResource(R.drawable.ic_round_mode);
+                }
+                else {
+                    define.cmdRunModule[5] = define.NORMAL_MODE;
+                    btnModeSoundDetect.setBackgroundResource(R.drawable.ic_sound_mode);
+                }
+
+                if (blueControl.getInstance() != null) {
+                    blueControl.getInstance().write(define.cmdRunModule);
+                }
+            }
+        });
+
+        btnModeFollwingLine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stateRunFollowingLine = !stateRunFollowingLine;
+                if (stateRunFollowingLine) {
+                    define.cmdRunModule[5] = define.LINE_DETECT_MODE;
+                    btnModeFollwingLine.setBackgroundResource(R.drawable.ic_line_mode_select);
+                    btnModeSrf05.setBackgroundResource(R.drawable.ic_srf05_mode);
+                    btnModeSoundDetect.setBackgroundResource(R.drawable.ic_sound_mode);
+                    btnModeRunCircle.setBackgroundResource(R.drawable.ic_round_mode);
+                }
+                else {
+                    define.cmdRunModule[5] = define.NORMAL_MODE;
+                    btnModeFollwingLine.setBackgroundResource(R.drawable.ic_line_mode);
+                }
+
+                if (blueControl.getInstance() != null) {
+                    blueControl.getInstance().write(define.cmdRunModule);
+                }
+            }
+        });
+
+        btnModeRunCircle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stateRunInCircle = !stateRunInCircle;
+                if (stateRunInCircle) {
+                    define.cmdRunModule[5] = define.LINE_CIRCLE_MODE;
+                    btnModeRunCircle.setBackgroundResource(R.drawable.ic_round_mode_select);
+                    btnModeSrf05.setBackgroundResource(R.drawable.ic_srf05_mode);
+                    btnModeSoundDetect.setBackgroundResource(R.drawable.ic_sound_mode);
+                    btnModeFollwingLine.setBackgroundResource(R.drawable.ic_line_mode);
+                }
+                else {
+                    define.cmdRunModule[5] = define.NORMAL_MODE;
+                    btnModeRunCircle.setBackgroundResource(R.drawable.ic_round_mode);
+                }
+
+                if (blueControl.getInstance() != null) {
+                    blueControl.getInstance().write(define.cmdRunModule);
+                }
             }
         });
 
@@ -674,7 +769,7 @@ public class Control extends AppCompatActivity {
                     case define.LIGHT:
                         textSrf05.setText("");
                         textColor.setText("");
-                        textLight.setText(displayText);
+                        textLight.setText(displayText + "%");
                         break;
                     case define.COLOR: {
                         textSrf05.setText("");

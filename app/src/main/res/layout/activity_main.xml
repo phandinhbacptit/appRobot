@@ -60,42 +60,24 @@
             android:layout_marginLeft="0dp"
             android:layout_marginRight="50dp"
             android:background="@drawable/ic_menu_bg">
-            <!--- ____________Start layout Programming________-->
+            <!--- ____________Start layout Mechanical________-->
             <ImageButton
-                android:id="@+id/btn_program"
+                android:id="@+id/btn_mechanical"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginLeft="60dp"
                 android:layout_marginRight="60dp"
-                android:background="@drawable/ic_program"/>
-        <!--- ____________Start layout Control________-->
+                android:background="@drawable/ic_mechanical"/>
+            <!--- ____________Start layout Programming________-->
             <ImageButton
-                android:id="@+id/btn_control"
+                android:id="@+id/btn_play"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="60dp"
                 android:layout_marginRight="60dp"
                 android:background="@drawable/ic_control"/>
-        <!--- ____________Start layout Music_______-->
-            <ImageButton
-                android:id="@+id/btn_music"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="60dp"
-                android:layout_marginRight="60dp"
-                android:background="@drawable/ic_play_music"/>
-        <!--- ____________Start layout Mechanical________-->
-            <ImageButton
-                android:id="@+id/btn_mechanical"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="60dp"
-                android:layout_marginRight="60dp"
-                android:background="@drawable/ic_mechanical"/>
         <!--- ____________Start layout Guidle________-->
             <ImageButton
                 android:id="@+id/btn_guidle"
@@ -105,6 +87,15 @@
                 android:layout_marginLeft="60dp"
                 android:layout_marginRight="60dp"
                 android:background="@drawable/ic_guidle"/>
+            <!--- ____________Start layout Control________-->
+            <ImageButton
+                android:id="@+id/btn_program"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:background="@drawable/ic_program"/>
         <!--- ____________Start layout Exit________-->
             <ImageButton
                 android:id="@+id/btn_exit"

@@ -27,23 +27,17 @@ public class Music extends AppCompatActivity {
     View c_s, d_s, e_s, f_s, g_s, a_s, b_s;
     View c_d_s, d_e_s, f_g_s, g_a_s, a_b_s;
     BluetoothAdapter bluetoothAdapter;
-    byte[] C = {(byte)0xff, 0x55, 0x07, 0x0, 0x02, 0x09, 0x0d,0x02,(byte)0xfa,0x00};
-    byte[] C_D = {(byte)0xff, 0x55, 0x07, 0x0, 0x02, 0x09, 0x2a,0x02,(byte)0xfa,0x00};
-    byte[] D = {(byte)0xff, 0x55, 0x07, 0x0, 0x02, 0x09, 0x4b,0x02,(byte)0xfa,0x00};
-    byte[] D_E = {(byte)0xff, 0x55, 0x07, 0x0, 0x02, 0x09, 0x06e,0x02,(byte)0xfa,0x00};
-    byte[] E = {(byte)0xff, 0x55, 0x07, 0x0, 0x02, 0x09, (byte)0x93,0x02,(byte)0xfa,0x00};
-    byte[] F = {(byte)0xff, 0x55, 0x07, 0x0, 0x02, 0x09, (byte)0xba,0x02,(byte)0xfa,0x00};
-    byte[] F_G = {(byte)0xff, 0x55, 0x07, 0x0, 0x02, 0x09, (byte)0xe4,0x02,(byte)0xfa,0x00};
-    byte[] G = {(byte)0xff, 0x55, 0x07, 0x0, 0x02, 0x09, 0x10,0x03,(byte)0xfa,0x00};
-    byte[] G_A = {(byte)0xff, 0x55, 0x07, 0x0, 0x02, 0x09, 0x3e,0x03,(byte)0xfa,0x00};
-    byte[] A = {(byte)0xff, 0x55, 0x07, 0x0, 0x02, 0x09, 0x70,0x03,(byte)0xfa,0x00};
-    byte[] A_B = {(byte)0xff, 0x55, 0x07, 0x0, 0x02, 0x09, (byte)0xa4,0x03,(byte)0xfa,0x00};
-    byte[] B = {(byte)0xff, 0x55, 0x07, 0x0, 0x02, 0x09, (byte)0xdb,0x03,(byte)0xfa,0x00};
     private static final int REQUEST_ENABLE_BT = 1;
 
     classicBluetooth bluemusic;
     boolean stateBond = false;
 
+    void run_tone (int fre_tone) {
+        shareFunction.runBuzzer(0,0,0, fre_tone,250);
+        if (bluemusic.getInstance() != null) {
+            bluemusic.getInstance().write(define.cmdRunModule);
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +104,7 @@ public class Music extends AppCompatActivity {
         MusicBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Music.this, MainActivity.class));
+                startActivity(new Intent(Music.this, play.class));
             }
         });
 
@@ -133,102 +127,78 @@ public class Music extends AppCompatActivity {
         c_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bluemusic.getInstance() != null) {
-                    bluemusic.getInstance().write(C);
-                }
+                run_tone(define.C);
             }
         });
         d_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bluemusic.getInstance() != null) {
-                    bluemusic.getInstance().write(D);
-                }
+                run_tone(define.D);
             }
         });
         e_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bluemusic.getInstance() != null) {
-                    bluemusic.getInstance().write(E);
-                }
+                run_tone(define.E);
             }
         });
         f_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bluemusic.getInstance() != null) {
-                    bluemusic.getInstance().write(F);
-                }
+                run_tone(define.F);
             }
         });
         g_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bluemusic.getInstance() != null) {
-                    bluemusic.getInstance().write(G);
-                }
+                run_tone(define.G);
             }
         });
         a_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bluemusic.getInstance() != null) {
-                    bluemusic.getInstance().write(A);
-                }
+                run_tone(define.A);
             }
         });
         b_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bluemusic.getInstance() != null) {
-                    bluemusic.getInstance().write(B);
-                }
+                run_tone(define.B);
             }
         });
 
         c_d_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bluemusic.getInstance() != null) {
-                    bluemusic.getInstance().write(C_D);
-                }
+                run_tone(define.C_D);
             }
         });
 
         d_e_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bluemusic.getInstance() != null) {
-                    bluemusic.getInstance().write(D_E);
-                }
+                run_tone(define.D_E);
             }
         });
 
         f_g_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bluemusic.getInstance() != null) {
-                    bluemusic.getInstance().write(F_G);
-                }
+                run_tone(define.F_G);
             }
         });
 
         g_a_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bluemusic.getInstance() != null) {
-                    bluemusic.getInstance().write(G_A);
-                }
+                run_tone(define.G_A);
             }
         });
 
         a_b_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bluemusic.getInstance() != null) {
-                    bluemusic.getInstance().write(A_B);
-                }
+                run_tone(define.A_B);
             }
         });
 //        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();

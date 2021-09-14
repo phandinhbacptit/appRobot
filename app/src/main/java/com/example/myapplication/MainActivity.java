@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
-    private  ImageView imageMachanical,  imageMusic, imageControl, imageGuidle, imageProgram, imageExit;
+    private  ImageView imageMachanical, imagePlay, imageGuidle, imageProgram, imageExit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +32,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         imageMachanical = (ImageView)findViewById((R.id.btn_mechanical));
-        imageMusic = (ImageView)findViewById((R.id.btn_music));
-        imageControl = (ImageView)findViewById((R.id.btn_control));
+        imagePlay = (ImageView)findViewById((R.id.btn_play));
         imageProgram = (ImageView)findViewById((R.id.btn_program));
         imageGuidle = (ImageView)findViewById((R.id.btn_guidle));
         imageExit = (ImageView)findViewById((R.id.btn_exit));
@@ -63,16 +62,10 @@ public class MainActivity extends AppCompatActivity {
                 openMechanical();
             }
         });
-        imageMusic.setOnClickListener(new View.OnClickListener() {
+        imagePlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMusic();
-            }
-        });
-        imageControl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openControl();
+                openPlay();
             }
         });
     }
@@ -80,16 +73,12 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Mechanical.class);
         startActivity(intent);
     }
-    public void openMusic() {
-        Intent intent = new Intent(this, Music.class);
-        startActivity(intent);
-    }
     public void openProgram() {
         Intent intent = new Intent(this, Programming.class);
         startActivity(intent);
     }
-    public void openControl() {
-        Intent intent = new Intent(this, Control.class);
+    public void openPlay() {
+        Intent intent = new Intent(this, play.class);
         startActivity(intent);
     }
     public void openGuidle() {

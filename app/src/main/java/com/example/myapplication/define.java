@@ -36,6 +36,9 @@ public class define {
     public static final int WHITE = 7;
     public static final int BLACK = 8;
 
+    /*Define state control module*/
+    public static final int ON_MODULE = 1;
+    public static final int OFF_MODULE = 0;
 
     /*Define Code RGB LED color*/
     public static byte RED_COLOR[] = {(byte)0xff, (byte)0x00, (byte)0x00};
@@ -87,6 +90,19 @@ public class define {
     public static long ring_led_effect [][] = {
             {(long)0x000001, (long)0x000000 , (long)0x000000 , (long)0x000000, (long)0x000000, (long)0x000000, (long)0x000000 , (long)0x000000, (long)0x000000, (long)0x000000, (long)0x000000, (long)0x000000},
     };
+    /*Define freq music tone*/
+    public static final int C = 525 ;
+    public static final int C_D = 554;
+    public static final int D = 587 ;
+    public static final int D_E = 622;
+    public static final int E = 659;
+    public static final int F = 698;
+    public static final int F_G = 740;
+    public static final int G = 784;
+    public static final int G_A = 830;
+    public static final int A = 880;
+    public static final int A_B = 932;
+    public static final int B = 987;
     /*Define song for buzzer*/
     public static int [] hpbdSong= {525, 525, 587, 525, 698, 659, 525,525, 587, 525,784, 698, 525, 525, 987, 880, 698, 659, 587, 932, 932, 880, 698, 784, 698};
     /* header1(0) header2(1) length(2) id(3) action(4) device(5)

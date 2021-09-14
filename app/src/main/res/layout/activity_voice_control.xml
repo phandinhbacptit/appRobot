@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg_control_menu"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id ="@+id/layoutHeader"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btnVCtrBack"
+            android:layout_width="50dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/ic_back_icon" />
+
+        <TextView
+            android:id="@+id/label_Voicecontrol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="1dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/ic_text_control" />
+
+        <ImageButton
+            android:id="@+id/btnConnVoiceBluetooth"
+            android:layout_width="13pt"
+            android:layout_height="13pt"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/ic_ble_off" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_horizontal_line"
+        android:background="@drawable/ic_thanhngang">
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutBottom"
+        android:layout_width="match_parent"
+        android:layout_height="347dp"
+        android:layout_alignBottom="@id/layout_horizontal_line"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/layoutVoiceControl"
+            android:layout_width="match_parent"
+            android:layout_height="347dp"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/btnShowAffectVoice"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/none_voice" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/headerText"
+            android:text=""
+            android:textColor="#58FFFF"
+            android:layout_marginTop="20dp"
+            android:textSize="30dp"
+            android:layout_centerHorizontal="true"/>
+
+        <ListView
+            android:id="@+id/listCommand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textSpeech"
+            android:text="Hello World!"
+            android:textColor="#58FFFF"
+            android:textSize="30dp"
+            android:layout_marginTop="170dp"
+            android:layout_marginLeft="400dp"/>
+
+        <ImageButton
+            android:id="@+id/btnGetVoice"
+            android:layout_width="80dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="650dp"
+            android:layout_marginTop="130dp"
+            android:background="@drawable/mic" />
+    </RelativeLayout>
+</LinearLayout>

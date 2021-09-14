@@ -86,15 +86,26 @@ public class Control extends AppCompatActivity {
             stateBond = false;
         }
     };
-
+    void sendRunCommand()
+    {
+        if (blueControl.getInstance() != null) {
+            blueControl.getInstance().write(define.cmdRunModule);
+        }
+    }
+    void sendGetCommand(int module, int stateModule) {
+        if (blueControl.getInstance() != null) {
+            define.cmd_get_valModule[5] = (byte) module;
+            define.cmd_get_valModule[6] = (byte) stateModule;
+            blueControl.getInstance().write(define.cmd_get_valModule);
+        }
+    }
+    int _module = 0;
     public void getData(int module) {
+
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                if (blueControl.getInstance() != null) {
-                    define.cmd_get_valModule[5] = (byte) module;
-                    blueControl.getInstance().write(define.cmd_get_valModule);
-                }
+                sendGetCommand(module, define.ON_MODULE);
                 Log.i("hhhh", "Sent request read sensor data");
             }
         };
@@ -103,29 +114,30 @@ public class Control extends AppCompatActivity {
         timer = new Timer("Timer");
         if (module != 0) {
             timer.schedule(timerTask, 0, 50);
-        } else {
+            _module = module;
+        }
+        else {
+            sendGetCommand(_module, define.OFF_MODULE);
             textSrf05.setText("");
             textLight.setText("");
             if (timer != null) {
                 timer.cancel();
-                ;
             }
         }
     }
-
     public void check_connected() {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                try {
-                    if (connectingBluetooth.getStateConnectedBlue()) {
-                        btnConnect.setBackgroundResource(R.drawable.ic_ble_on);
-                        timer.cancel();
-                    } else {
-                        btnConnect.setBackgroundResource(R.drawable.ic_ble_off);
-                    }
-                } catch (NullPointerException ex) {
+            try {
+                if (connectingBluetooth.getStateConnectedBlue()) {
+                    btnConnect.setBackgroundResource(R.drawable.ic_ble_on);
+                    timer.cancel();
+                } else {
+                    btnConnect.setBackgroundResource(R.drawable.ic_ble_off);
                 }
+            } catch (NullPointerException ex) {
+            }
             }
         };
         if (timer != null)
@@ -134,27 +146,49 @@ public class Control extends AppCompatActivity {
         timer.schedule(timerTask, 0, 5000);
     }
 
-    void delay(int ms) {
-        try {
-            Thread.sleep(ms);
-        } catch (
-                Exception e) {
-            e.printStackTrace();
-        }
+    void resetState(boolean state)
+    {
+        if (stateGetSrf05 != state)
+            stateGetSrf05 = false;
+        if (stateGetLightSensor != state)
+            stateGetLightSensor = false;
+        if (stateGetLine != state)
+            stateGetLine = false;
+        if (stateGetButton != state)
+            stateGetButton = false;
+        if (stateGetColor != state)
+            stateGetColor = false;
+        if (stateGetSound != state)
+            stateGetSound = false;
+        if (stateRunFollowingLine != state)
+            stateRunFollowingLine = false;
+        if (stateRunInCircle != state)
+            stateRunInCircle = false;
+        if (stateRunSrf05 != state)
+            stateRunSrf05 = false;
+        if (stateRunSoundMode != state)
+            stateRunSoundMode = false;
     }
-//    void dutySend(long duration){
-//        new CountDownTimer(6000, duration) {
-//            @Override
-//            public void onTick(long i) {
-//                val++;
-//                textLine.setText(String.format("%d",val));
-//            }
-//            @Override
-//            public  void onFinish() {
-//
-//            }
-//        }.start();
-//    }
+
+    void resetBackground()
+    {
+        btnModeSrf05.setBackgroundResource(R.drawable.ic_srf05_mode);
+        btnModeSoundDetect.setBackgroundResource(R.drawable.ic_sound_mode);
+        btnModeFollwingLine.setBackgroundResource(R.drawable.ic_line_mode);
+        btnModeRunCircle.setBackgroundResource(R.drawable.ic_round_mode);
+        btnGetSrf05.setBackgroundResource(R.drawable.ic_read_srf05);
+        btnGetLine.setBackgroundResource(R.drawable.ic_read_line);
+        btnGetLight.setBackgroundResource(R.drawable.ic_read_light);
+        btnGetBtn.setBackgroundResource(R.drawable.ic_read_button);
+        btnGetSound.setBackgroundResource(R.drawable.ic_read_sound);
+        lineLeft.setBackgroundResource(R.drawable.ic_line_off);
+        lineRight.setBackgroundResource(R.drawable.ic_line_off);
+        btnGetColor.setBackgroundResource(R.drawable.ic_read_color);
+        textColor.setText("");
+        textLight.setText("");
+        textSrf05.setText("");
+        getData(define.NONE);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -224,7 +258,7 @@ public class Control extends AppCompatActivity {
         backCtrBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Control.this, MainActivity.class));
+                startActivity(new Intent(Control.this, play.class));
             }
         });
         mIntentFilter = new IntentFilter();
@@ -314,9 +348,7 @@ public class Control extends AppCompatActivity {
                         shareFunction.runRGB(0, 0, 0, define.BLACK_COLOR);
                         break;
                 }
-                if (blueControl.getInstance() != null) {
-                    blueControl.getInstance().write(define.cmdRunModule);
-                }
+                sendRunCommand();
                 ledColor++;
                 if (ledColor > define.WHITE)
                     ledColor = 0;
@@ -330,9 +362,7 @@ public class Control extends AppCompatActivity {
                 if (cnt_effect_ring >= define.NUM_RING_EFFECT)
                     cnt_effect_ring = 0;
                 shareFunction.runRingLed(0,0,0, define.ring_led_effect[cnt_effect_ring]);
-                if (blueControl.getInstance() != null) {
-                    blueControl.getInstance().write(define.cmdRunModule);
-                }
+                sendRunCommand();
             }
         });
         btnLedMatrix.setOnClickListener(new View.OnClickListener() {
@@ -344,9 +374,7 @@ public class Control extends AppCompatActivity {
                 if (cnt_effect >= 12)
                     cnt_effect = 0;
                 shareFunction.runMaTrix(0, 0, 0, define.motion_effect[cnt_effect], duration);
-                if (blueControl.getInstance() != null) {
-                    blueControl.getInstance().write(define.cmdRunModule);
-                }
+                sendRunCommand();
             }
         });
         btnBuzzer.setOnClickListener(new View.OnClickListener() {
@@ -357,9 +385,7 @@ public class Control extends AppCompatActivity {
                 buzzerFreq = define.hpbdSong[index];
                 buzzerDuration = 250;
                 shareFunction.runBuzzer(0, 0, 0, buzzerFreq, buzzerDuration);
-                if (blueControl.getInstance() != null) {
-                    blueControl.getInstance().write(define.cmdRunModule);
-                }
+                sendRunCommand();
                 index++;
             }
         });
@@ -367,107 +393,82 @@ public class Control extends AppCompatActivity {
         btnModeSrf05.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                resetBackground();
+                resetState(stateRunSrf05);
                 stateRunSrf05 = !stateRunSrf05;
                 if (stateRunSrf05) {
                     define.cmdRunModule[5] = define.SRF05_RUN_MODE;
                     btnModeSrf05.setBackgroundResource(R.drawable.ic_srf05_mode_select);
-                    btnModeSoundDetect.setBackgroundResource(R.drawable.ic_sound_mode);
-                    btnModeFollwingLine.setBackgroundResource(R.drawable.ic_line_mode);
-                    btnModeRunCircle.setBackgroundResource(R.drawable.ic_round_mode);
                 }
                 else {
                     define.cmdRunModule[5] = define.NORMAL_MODE;
-                    btnModeSrf05.setBackgroundResource(R.drawable.ic_srf05_mode);
                 }
-
-                if (blueControl.getInstance() != null) {
-                    blueControl.getInstance().write(define.cmdRunModule);
-                }
+                sendRunCommand();
             }
         });
 
         btnModeSoundDetect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                resetBackground();
+                resetState(stateRunSoundMode);
                 stateRunSoundMode = !stateRunSoundMode;
                 if (stateRunSoundMode) {
                     define.cmdRunModule[5] = define.SOUND_FOLLOW_MODE;
                     btnModeSoundDetect.setBackgroundResource(R.drawable.ic_sound_mode_select);
-                    btnModeSrf05.setBackgroundResource(R.drawable.ic_srf05_mode);
-                    btnModeFollwingLine.setBackgroundResource(R.drawable.ic_line_mode);
-                    btnModeRunCircle.setBackgroundResource(R.drawable.ic_round_mode);
                 }
                 else {
                     define.cmdRunModule[5] = define.NORMAL_MODE;
-                    btnModeSoundDetect.setBackgroundResource(R.drawable.ic_sound_mode);
                 }
-
-                if (blueControl.getInstance() != null) {
-                    blueControl.getInstance().write(define.cmdRunModule);
-                }
+                sendRunCommand();
             }
         });
 
         btnModeFollwingLine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                resetBackground();
+                resetState(stateRunFollowingLine);
                 stateRunFollowingLine = !stateRunFollowingLine;
                 if (stateRunFollowingLine) {
                     define.cmdRunModule[5] = define.LINE_DETECT_MODE;
                     btnModeFollwingLine.setBackgroundResource(R.drawable.ic_line_mode_select);
-                    btnModeSrf05.setBackgroundResource(R.drawable.ic_srf05_mode);
-                    btnModeSoundDetect.setBackgroundResource(R.drawable.ic_sound_mode);
-                    btnModeRunCircle.setBackgroundResource(R.drawable.ic_round_mode);
                 }
                 else {
                     define.cmdRunModule[5] = define.NORMAL_MODE;
-                    btnModeFollwingLine.setBackgroundResource(R.drawable.ic_line_mode);
                 }
-
-                if (blueControl.getInstance() != null) {
-                    blueControl.getInstance().write(define.cmdRunModule);
-                }
+                sendRunCommand();
             }
         });
 
         btnModeRunCircle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                resetBackground();
+                resetState(stateRunInCircle);
                 stateRunInCircle = !stateRunInCircle;
                 if (stateRunInCircle) {
                     define.cmdRunModule[5] = define.LINE_CIRCLE_MODE;
                     btnModeRunCircle.setBackgroundResource(R.drawable.ic_round_mode_select);
-                    btnModeSrf05.setBackgroundResource(R.drawable.ic_srf05_mode);
-                    btnModeSoundDetect.setBackgroundResource(R.drawable.ic_sound_mode);
-                    btnModeFollwingLine.setBackgroundResource(R.drawable.ic_line_mode);
                 }
                 else {
                     define.cmdRunModule[5] = define.NORMAL_MODE;
-                    btnModeRunCircle.setBackgroundResource(R.drawable.ic_round_mode);
                 }
-
-                if (blueControl.getInstance() != null) {
-                    blueControl.getInstance().write(define.cmdRunModule);
-                }
+                sendRunCommand();
             }
         });
 
         btnGetSrf05.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                resetBackground();
+                resetState(stateGetSrf05);
                 stateGetSrf05 = !stateGetSrf05;
                 if (stateGetSrf05) {
                     getData(define.SRF05);
                     btnGetSrf05.setBackgroundResource(R.drawable.ic_read_srf05_select);
-                    btnGetLine.setBackgroundResource(R.drawable.ic_read_line);
-                    btnGetLight.setBackgroundResource(R.drawable.ic_read_light);
-                    btnGetBtn.setBackgroundResource(R.drawable.ic_read_button);
-                    lineLeft.setBackgroundResource(R.drawable.ic_line_off);
-                    lineRight.setBackgroundResource(R.drawable.ic_line_off);
-                    btnGetColor.setBackgroundResource(R.drawable.ic_read_color);
                 } else {
                     getData(define.NONE);
-                    btnGetSrf05.setBackgroundResource(R.drawable.ic_read_srf05);
                 }
             }
         });
@@ -475,100 +476,73 @@ public class Control extends AppCompatActivity {
         btnGetLine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                resetBackground();
+                resetState(stateGetLine);
                 stateGetLine = !stateGetLine;
                 if (stateGetLine) {
                     getData(define.LINE);
                     btnGetLine.setBackgroundResource(R.drawable.ic_read_line_select);
-                    btnGetSrf05.setBackgroundResource(R.drawable.ic_read_srf05);
-                    btnGetLight.setBackgroundResource(R.drawable.ic_read_light);
-                    btnGetBtn.setBackgroundResource(R.drawable.ic_read_button);
-                    btnGetSound.setBackgroundResource(R.drawable.ic_read_sound);
-                    lineLeft.setBackgroundResource(R.drawable.ic_line_off);
-                    lineRight.setBackgroundResource(R.drawable.ic_line_off);
-                    btnGetColor.setBackgroundResource(R.drawable.ic_read_color);
                 } else {
                     getData(define.NONE);
-                    btnGetLine.setBackgroundResource(R.drawable.ic_read_line);
                 }
             }
         });
         btnGetLight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                resetBackground();
+                resetState(stateGetLightSensor);
                 stateGetLightSensor = !stateGetLightSensor;
                 if (stateGetLightSensor) {
                     getData(define.LIGHT);
                     btnGetLight.setBackgroundResource(R.drawable.ic_read_light_select);
-                    btnGetSrf05.setBackgroundResource(R.drawable.ic_read_srf05);
-                    btnGetLine.setBackgroundResource(R.drawable.ic_read_line);
-                    btnGetBtn.setBackgroundResource(R.drawable.ic_read_button);
-                    lineLeft.setBackgroundResource(R.drawable.ic_line_off);
-                    lineRight.setBackgroundResource(R.drawable.ic_line_off);
-                    btnGetColor.setBackgroundResource(R.drawable.ic_read_color);
                 } else {
                     getData(define.NONE);
-                    btnGetLight.setBackgroundResource(R.drawable.ic_read_light);
                 }
             }
         });
         btnGetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                resetBackground();
+                resetState(stateGetButton);
                 stateGetButton = !stateGetButton;
                 if (stateGetButton) {
                     getData(define.MODE_BTN);
                     btnGetBtn.setBackgroundResource(R.drawable.ic_read_button_select);
-                    btnGetSrf05.setBackgroundResource(R.drawable.ic_read_srf05);
-                    btnGetLine.setBackgroundResource(R.drawable.ic_read_line);
-                    btnGetLight.setBackgroundResource(R.drawable.ic_read_light);
-                    lineLeft.setBackgroundResource(R.drawable.ic_line_off);
-                    lineRight.setBackgroundResource(R.drawable.ic_line_off);
-                    btnGetSound.setBackgroundResource(R.drawable.ic_read_sound);
-                    btnGetColor.setBackgroundResource(R.drawable.ic_read_color);
                 } else {
                     getData(define.NONE);
-                    btnGetBtn.setBackgroundResource(R.drawable.ic_read_button);
                 }
             }
         });
         btnGetSound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             stateGetSound = !stateGetSound;
-             if (stateGetSound) {
-                 getData(define.SOUND);
-                 btnGetSound.setBackgroundResource(R.drawable.ic_read_sound_select);
-                 btnGetBtn.setBackgroundResource(R.drawable.ic_read_button);
-                 btnGetSrf05.setBackgroundResource(R.drawable.ic_read_srf05);
-                 btnGetLine.setBackgroundResource(R.drawable.ic_read_line);
-                 btnGetLight.setBackgroundResource(R.drawable.ic_read_light);
-                 lineLeft.setBackgroundResource(R.drawable.ic_line_off);
-                 lineRight.setBackgroundResource(R.drawable.ic_line_off);
-                 btnGetColor.setBackgroundResource(R.drawable.ic_read_color);
-             }
-             else {
-                 getData(define.NONE);
-                 btnGetSound.setBackgroundResource(R.drawable.ic_read_sound);
-             }
+                resetBackground();
+                resetState(stateGetSound);
+                stateGetSound = !stateGetSound;
+                if (stateGetSound) {
+                    getData(define.SOUND);
+                    btnGetSound.setBackgroundResource(R.drawable.ic_read_sound_select);
+                }
+                else {
+                    getData(define.NONE);
+                }
             }
         });
         btnGetColor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                resetBackground();
+                resetState(stateGetColor);
                 stateGetColor = !stateGetColor;
                 if (stateGetColor) {
                     getData(define.COLOR);
+                    textServo1.setText("hello");
                     btnGetColor.setBackgroundResource(R.drawable.ic_read_color_select);
-                    btnGetSound.setBackgroundResource(R.drawable.ic_read_sound);
-                    btnGetBtn.setBackgroundResource(R.drawable.ic_read_button);
-                    btnGetSrf05.setBackgroundResource(R.drawable.ic_read_srf05);
-                    btnGetLine.setBackgroundResource(R.drawable.ic_read_line);
-                    btnGetLight.setBackgroundResource(R.drawable.ic_read_light);
-                    lineLeft.setBackgroundResource(R.drawable.ic_line_off);
-                    lineRight.setBackgroundResource(R.drawable.ic_line_off);
                 } else {
+                    textServo1.setText("");
                     getData(define.NONE);
-                    btnGetColor.setBackgroundResource(R.drawable.ic_read_color);
                 }
             }
         });
@@ -734,121 +708,128 @@ public class Control extends AppCompatActivity {
 //                Log.i("mByte ", "++" + msgReceived);
                 fbData = handleData(buffer);
                 String displayText = Float.toString(shareFunction.byteArray2Float(fbData));
-//                textColor.setText(msgReceived);
                 switch (buffer[2]) {
                     case define.SRF05: {
-                        textSrf05.setText(displayText);
-                        textColor.setText("");
-                        textLight.setText("");
-                        break;
-                    }
-                    case define.LINE: {
-                        textSrf05.setText("");
-                        textColor.setText(displayText);
-                        textLight.setText("");
-                        switch ((int)shareFunction.byteArray2Float(fbData)) {
-                            case define.ALL_ON:
-                                lineLeft.setBackgroundResource(R.drawable.ic_line_on);
-                                lineRight.setBackgroundResource(R.drawable.ic_line_on);
-                                break;
-                            case define.LEFT_ON:
-                                lineLeft.setBackgroundResource(R.drawable.ic_line_on);
-                                lineRight.setBackgroundResource(R.drawable.ic_line_off);
-                                break;
-                            case define.RIGHT_ON:
-                                lineLeft.setBackgroundResource(R.drawable.ic_line_off);
-                                lineRight.setBackgroundResource(R.drawable.ic_line_on);
-                                break;
-                            default:
-                                lineLeft.setBackgroundResource(R.drawable.ic_line_off);
-                                lineRight.setBackgroundResource(R.drawable.ic_line_off);
-                                break;
+                        if (stateGetSrf05) {
+                            textSrf05.setText(displayText);
+//                            textColor.setText("");
+//                            textLight.setText("");
                         }
                         break;
                     }
-                    case define.LIGHT:
-                        textSrf05.setText("");
-                        textColor.setText("");
-                        textLight.setText(displayText + "%");
+                    case define.LINE: {
+                        if (stateGetLine) {
+//                            textSrf05.setText("");
+//                            textColor.setText("");
+//                            textLight.setText("");
+                            switch ((int) shareFunction.byteArray2Float(fbData)) {
+                                case define.ALL_ON:
+                                    lineLeft.setBackgroundResource(R.drawable.ic_line_on);
+                                    lineRight.setBackgroundResource(R.drawable.ic_line_on);
+                                    break;
+                                case define.LEFT_ON:
+                                    lineLeft.setBackgroundResource(R.drawable.ic_line_on);
+                                    lineRight.setBackgroundResource(R.drawable.ic_line_off);
+                                    break;
+                                case define.RIGHT_ON:
+                                    lineLeft.setBackgroundResource(R.drawable.ic_line_off);
+                                    lineRight.setBackgroundResource(R.drawable.ic_line_on);
+                                    break;
+                                default:
+                                    lineLeft.setBackgroundResource(R.drawable.ic_line_off);
+                                    lineRight.setBackgroundResource(R.drawable.ic_line_off);
+                                    break;
+                            }
+                            break;
+                        }
+                    }
+                    case define.LIGHT: {
+                        if (stateGetLightSensor) {
+//                            textSrf05.setText("");
+//                            textColor.setText("");
+                            textLight.setText(displayText + "%");
+                        }
                         break;
+                    }
                     case define.COLOR: {
-                        textSrf05.setText("");
-                        textLight.setText("");
-                        switch ((int)shareFunction.byteArray2Float(fbData)) {
-                            case define.RED:
-                                btnGetColor.setBackgroundResource(R.drawable.ic_read_color_red);
-                                textColor.setText("Màu đỏ");
-                                break;
-                            case define.GREEN:
-                                btnGetColor.setBackgroundResource(R.drawable.ic_read_color_green);
-                                textColor.setText("Màu xanh lá");
-                                break;
-                            case define.BLUE:
-                                btnGetColor.setBackgroundResource(R.drawable.ic_read_color_blue);
-                                textColor.setText("Màu xanh lam");
-                                break;
-                            case define.YELLOW:
-                                btnGetColor.setBackgroundResource(R.drawable.ic_read_color_yellow);
-                                textColor.setText("Màu vàng");
-                                break;
-                            case define.WHITE:
-                                btnGetColor.setBackgroundResource(R.drawable.ic_read_color_white);
-                                textColor.setText("Màu trắng");
-                                break;
-                            case define.BLACK:
-                                btnGetColor.setBackgroundResource(R.drawable.ic_read_color_black);
-                                textColor.setText("Màu đen");
-                                break;
-                            default: {
-                                if (stateGetColor) {
+                        if (stateGetColor) {
+//                            textSrf05.setText("");
+//                            textLight.setText("");
+                            switch ((int) shareFunction.byteArray2Float(fbData)) {
+                                case define.RED:
+                                    btnGetColor.setBackgroundResource(R.drawable.ic_read_color_red);
+                                    textColor.setText("Màu đỏ");
+                                    break;
+                                case define.GREEN:
+                                    btnGetColor.setBackgroundResource(R.drawable.ic_read_color_green);
+                                    textColor.setText("Màu xanh lá");
+                                    break;
+                                case define.BLUE:
+                                    btnGetColor.setBackgroundResource(R.drawable.ic_read_color_blue);
+                                    textColor.setText("Màu xanh lam");
+                                    break;
+                                case define.YELLOW:
+                                    btnGetColor.setBackgroundResource(R.drawable.ic_read_color_yellow);
+                                    textColor.setText("Màu vàng");
+                                    break;
+                                case define.WHITE:
+                                    btnGetColor.setBackgroundResource(R.drawable.ic_read_color_white);
+                                    textColor.setText("Màu trắng");
+                                    break;
+                                case define.BLACK:
+                                    btnGetColor.setBackgroundResource(R.drawable.ic_read_color_black);
+                                    textColor.setText("Màu đen");
+                                    break;
+                                default: {
                                     btnGetColor.setBackgroundResource(R.drawable.ic_read_color_select);
                                     textColor.setText("Màu ?");
+                                    break;
                                 }
-                                else {
-                                    btnGetColor.setBackgroundResource(R.drawable.ic_read_color);
-                                    textColor.setText(" ");
-                                }
-                                break;
                             }
                         }
                         break;
                     }
                     case define.MODE_BTN:{
-                        textSrf05.setText("");
-                        textColor.setText(displayText);
-                        textLight.setText("");
-                        switch ((int)shareFunction.byteArray2Float(fbData)) {
-                            case define.MODE_1:
-                                showMode1.setBackgroundResource(R.drawable.ic_mode2);
-                                showMode2.setBackgroundResource(R.drawable.ic_mode1);
-                                showMode3.setBackgroundResource(R.drawable.ic_mode1);
-                                break;
-                            case define.MODE_2:
-                                showMode1.setBackgroundResource(R.drawable.ic_mode2);
-                                showMode2.setBackgroundResource(R.drawable.ic_mode2);
-                                showMode3.setBackgroundResource(R.drawable.ic_mode1);
-                                break;
-                            case define.MODE_3:
-                                showMode1.setBackgroundResource(R.drawable.ic_mode2);
-                                showMode2.setBackgroundResource(R.drawable.ic_mode2);
-                                showMode3.setBackgroundResource(R.drawable.ic_mode2);
-                                break;
-                            default:
-                                showMode1.setBackgroundResource(R.drawable.ic_mode1);
-                                showMode2.setBackgroundResource(R.drawable.ic_mode1);
-                                showMode3.setBackgroundResource(R.drawable.ic_mode1);
-                                break;
+                        if (stateGetButton) {
+//                            textSrf05.setText("");
+//                            textColor.setText(displayText);
+//                            textLight.setText("");
+                            switch ((int) shareFunction.byteArray2Float(fbData)) {
+                                case define.MODE_1:
+                                    showMode1.setBackgroundResource(R.drawable.ic_mode2);
+                                    showMode2.setBackgroundResource(R.drawable.ic_mode1);
+                                    showMode3.setBackgroundResource(R.drawable.ic_mode1);
+                                    break;
+                                case define.MODE_2:
+                                    showMode1.setBackgroundResource(R.drawable.ic_mode2);
+                                    showMode2.setBackgroundResource(R.drawable.ic_mode2);
+                                    showMode3.setBackgroundResource(R.drawable.ic_mode1);
+                                    break;
+                                case define.MODE_3:
+                                    showMode1.setBackgroundResource(R.drawable.ic_mode2);
+                                    showMode2.setBackgroundResource(R.drawable.ic_mode2);
+                                    showMode3.setBackgroundResource(R.drawable.ic_mode2);
+                                    break;
+                                default:
+                                    showMode1.setBackgroundResource(R.drawable.ic_mode1);
+                                    showMode2.setBackgroundResource(R.drawable.ic_mode1);
+                                    showMode3.setBackgroundResource(R.drawable.ic_mode1);
+                                    break;
+                            }
                         }
                         break;
                     }
                     case define.SOUND: {
-                        textSrf05.setText("");
-                        textColor.setText(displayText);
-                        textLight.setText("");
-                        if (shareFunction.byteArray2Float(fbData) >= 1) {
-                            soundSignal.setBackgroundResource(R.drawable.have_sound);
-                        } else {
-                            soundSignal.setBackgroundResource(R.drawable.ic_sound);
+                        if (stateGetSound) {
+//                            textSrf05.setText("");
+//                            textColor.setText("");
+//                            textLight.setText("");
+
+                            if (shareFunction.byteArray2Float(fbData) >= 1) {
+                                soundSignal.setBackgroundResource(R.drawable.have_sound);
+                            } else {
+                                soundSignal.setBackgroundResource(R.drawable.ic_sound);
+                            }
                         }
                         break;
                     }

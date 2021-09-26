@@ -90,6 +90,9 @@ public class define {
     public static long ring_led_effect [][] = {
             {(long)0x000001, (long)0x000000 , (long)0x000000 , (long)0x000000, (long)0x000000, (long)0x000000, (long)0x000000 , (long)0x000000, (long)0x000000, (long)0x000000, (long)0x000000, (long)0x000000},
     };
+    public static long ring_led_off[][] = {
+            {(long)0x000000, (long)0x000000 , (long)0x000000 , (long)0x000000, (long)0x000000, (long)0x000000, (long)0x000000 , (long)0x000000, (long)0x000000, (long)0x000000, (long)0x000000, (long)0x000000},
+    };
     /*Define freq music tone*/
     public static final int C = 525 ;
     public static final int C_D = 554;

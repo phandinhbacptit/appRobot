@@ -143,7 +143,7 @@ public class Control extends AppCompatActivity {
         if (timer != null)
             timer.cancel();
         timer = new Timer("Timer");
-        timer.schedule(timerTask, 0, 5000);
+        timer.schedule(timerTask, 0, 1000);
     }
 
     void resetState(boolean state)

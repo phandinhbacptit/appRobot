@@ -139,7 +139,7 @@ public class classicBluetooth  extends Service {
 //        registerReceiver(mReceiver, filter);
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
         //Toast.makeText(classicBluetooth.this,"pairedDv" + pairedDevices.size() ,Toast.LENGTH_SHORT).show();
-        Log.d("hhhh","pairedDv" + pairedDevices.size());
+        Log.i("hhhh","pairedDv" + pairedDevices.size());
         if (pairedDevices.size() > 0) {
             for (BluetoothDevice device : pairedDevices) {
                 if (device.getName().equals(nameRobot)) {
@@ -278,7 +278,7 @@ public class classicBluetooth  extends Service {
         public void cancel() {
             try {
                 mSocket.close();
-                Log.i("service","connect thread cancel method");
+                Log.i("hhhh","connect thread cancel method");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -309,6 +309,7 @@ public class classicBluetooth  extends Service {
             inS = tmpIn;
             outS = tmpOut;
             statusConnect = true;
+            Log.i("hhhh","statusConnect = true");
         }
 
         @Override
@@ -338,6 +339,7 @@ public class classicBluetooth  extends Service {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Log.i("hhhh ", "errr");
                 }
             }
         }
@@ -362,7 +364,7 @@ public class classicBluetooth  extends Service {
         private void cancel(){
             try {
                 cSocket.close();
-                Log.d("service","connected thread cancel method");
+                Log.d("hhhh","connected thread cancel method");
             } catch (IOException e) {
                 e.printStackTrace();
             }

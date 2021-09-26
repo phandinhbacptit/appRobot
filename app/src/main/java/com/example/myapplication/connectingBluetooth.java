@@ -40,20 +40,20 @@ public class connectingBluetooth extends AppCompatActivity {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                try {
-                     if (blueConnecting.get_state_blue_connect()) {
-                         Log.i("hhhh","connected to the bluetooth Device");
-                         finish();
-                         timer.cancel();
-                         stateConnected = true;
-                     }
-                     else {
-                         blueConnecting.retry_connect();
-                         Log.i("hhhh","retry_connect");
-                     }
+            try {
+                if (blueConnecting.get_state_blue_connect()) {
+                     Log.i("hhhh","connected to the bluetooth Device");
+                     finish();
+                     timer.cancel();
+                     stateConnected = true;
                 }
-                catch (NullPointerException ex) {
+                else {
+                     blueConnecting.retry_connect();
+                     Log.i("hhhh","retry_connect");
                 }
+            }
+            catch (NullPointerException ex) {
+            }
             }
         };
         if (timer != null)
@@ -73,11 +73,11 @@ public class connectingBluetooth extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             decorView.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
             );
         }
         btnBack = (ImageButton)findViewById(R.id.returnPrevious);

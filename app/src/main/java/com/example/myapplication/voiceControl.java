@@ -5,11 +5,15 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -20,25 +24,58 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class voiceControl extends AppCompatActivity {
-    pl.droidsonroids.gif.GifImageView voiceSignal;
-    ImageButton getVoice, backVoiceCtrBtn;
-    TextView textSpeech, textHeader;
+    pl.droidsonroids.gif.GifImageView getVoice;
+    ImageButton backVoiceCtrBtn, vcBlueConnection;
+    TextView textSpeech, textHeader, test, textWait;
     ListView commandList;
     Timer timer;
     boolean stateGetCommand = false;
     ArrayAdapter<String> arrayAdapter;
-    String command[] = {"turn left", "turn right", "forward", "backward", "stop", "dance", "red", "green", "blue", "mix color", "sound mode"};
+    String listDisplay[] = {"turn left/quay trái","turn right/quay phải", "forward/tiến", "backward/lùi", "stop/dừng lại",
+            "dance/múa", "red/sáng đỏ", "green/sáng xanh lá", "blue/sáng xanh lam", "yellow/sáng vàng", "pink/sáng hồng",
+            "off/tắt", "mix color", "sound mode", "ring", "ring off" };
+    String command[] = {"turn left", "quay trái","turn right", "quay phải", "forward", "Tiến", "backward", "lùi", "stop","dừng lại",
+            "dance", "Red", "sáng đỏ", "green", "sáng xanh lá", "blue", "sáng xanh lam",
+            "yellow", "sáng vàng", "pink", "sáng hồng", "off", "tắt", "mix color", "sound mode", "ring", "ring off"};
 
+    classicBluetooth blueVoiceControl;
+    boolean stateBond = false;
+    boolean state = false;
+
+    void run_motor (int leftSpeed, int rightSpeed) {
+        shareFunction.runJoystick(0,0,0, leftSpeed,rightSpeed);
+        if (blueVoiceControl.getInstance() != null) {
+            blueVoiceControl.getInstance().write(define.cmdRunModule);
+        }
+    }
+
+    void run_rgb(byte[] color)
+    {
+        shareFunction.runRGB(0, 0, 0, color);
+        if (blueVoiceControl.getInstance() != null) {
+            blueVoiceControl.getInstance().write(define.cmdRunModule);
+        }
+    }
+    void run_ring_led()
+    {
+        shareFunction.runRingLed(0,0,0, define.ring_led_effect[0]);
+        if (blueVoiceControl.getInstance() != null) {
+            blueVoiceControl.getInstance().write(define.cmdRunModule);
+        }
+    }
     void resetText ()
     {
         commandList.setAdapter(null);
         textHeader.setText("");
         textSpeech.setText("");
+        textWait.setText("");
     }
     void díplayGuidle()
     {
@@ -62,16 +99,45 @@ public class voiceControl extends AppCompatActivity {
                             | View.SYSTEM_UI_FLAG_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
             );
-        voiceSignal = (pl.droidsonroids.gif.GifImageView)findViewById(R.id.btnShowAffectVoice);
-        getVoice = (ImageButton)findViewById(R.id.btnGetVoice);
+//        voiceSignal = (pl.droidsonroids.gif.GifImageView)findViewById(R.id.btnShowAffectVoice);
+        getVoice = (pl.droidsonroids.gif.GifImageView)findViewById(R.id.btnGetVoice);
+        vcBlueConnection = (ImageButton)findViewById(R.id.btnConnVoiceBluetooth);
         backVoiceCtrBtn = (ImageButton)findViewById(R.id.btnVCtrBack);
         textSpeech = (TextView)findViewById(R.id.textSpeech);
         textHeader = (TextView)findViewById(R.id.headerText);
+        textWait = (TextView)findViewById(R.id.textWait);
         commandList = (ListView)findViewById(R.id.listCommand);
+        test = (TextView)findViewById(R.id.textTest);
+
+        /*********************************Handle bluetooth connection******************************/
+        ServiceConnection musicConnection = new ServiceConnection()
+        {
+            @Override
+            public void onServiceConnected(ComponentName className, IBinder service) {
+                classicBluetooth.LocalBinder binder = (classicBluetooth.LocalBinder) service;
+                blueVoiceControl = binder.getService();
+                stateBond = true;
+            }
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                stateBond = false;
+            }
+        };
+
+        Intent intent = new Intent(this, classicBluetooth.class);
+
+        while (!state) {
+            state = bindService(intent, musicConnection, Context.BIND_AUTO_CREATE);
+        }
+        if (state) {
+            vcBlueConnection.setBackgroundResource(R.drawable.ic_ble_on);
+        }
+        else {
+            vcBlueConnection.setBackgroundResource(R.drawable.ic_ble_off);
+        }
+        /******************************************************************************************/
         SpeechRecognizer speechRecognizer;
-        arrayAdapter = new ArrayAdapter<String>(this, R.layout.activity_list_command, R.id.textView, command);
-
-
+        arrayAdapter = new ArrayAdapter<String>(this, R.layout.activity_list_command, R.id.textView, listDisplay);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.RECORD_AUDIO},1);
@@ -92,13 +158,13 @@ public class voiceControl extends AppCompatActivity {
                 resetText();
                 stateGetCommand = false;
                 getVoice.setBackgroundResource(R.drawable.mic_run);
-                voiceSignal.setBackgroundResource(R.drawable.have_sound);
+                textWait.setText("Xin mời nói...");
                 speechRecognizer.startListening(speedRecognizerIntent);
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        voiceSignal.setBackgroundResource(R.drawable.ic_sound);
+                        textWait.setText(" ");
                         getVoice.setBackgroundResource(R.drawable.mic);
                         speechRecognizer.stopListening();
                         díplayGuidle();
@@ -142,11 +208,37 @@ public class voiceControl extends AppCompatActivity {
 
 
                 ArrayList<String> data = results.getStringArrayList(speechRecognizer.RESULTS_RECOGNITION);
+                test.setText(data.get(0));
                 for (int i = 0; i < command.length; i++) {
                     if (data.get(0).equals(command[i])) {
                         resetText();
+                        textHeader.setText("Ranzer thực hiện lệnh");
                         textSpeech.setText(data.get(0));
                         stateGetCommand = true;
+                        if (data.get(0).equals("turn left") || data.get(0).equals("quay trái"))
+                            run_motor(150,150);
+                        if (data.get(0).equals("turn right") || data.get(0).equals("quay phải"))
+                            run_motor(-150,-150);
+                        if (data.get(0).equals("forward") || data.get(0).equals("Tiến"))
+                            run_motor(150,-150);
+                        if (data.get(0).equals("backward") || data.get(0).equals("lùi"))
+                            run_motor(-150,150);
+                        if (data.get(0).equals("stop") || data.get(0).equals("dừng lại"))
+                            run_motor(0,0);
+                        if (data.get(0).equals("red") || data.get(0).equals("sáng đỏ"))
+                            run_rgb(define.RED_COLOR);
+                        if (data.get(0).equals("green") || data.get(0).equals("sáng xanh lá"))
+                            run_rgb(define.GREEN_COLOR);
+                        if (data.get(0).equals("blue") || data.get(0).equals("sáng xanh lam"))
+                            run_rgb(define.BLUE_COLOR);
+                        if (data.get(0).equals("yellow") || data.get(0).equals("sáng vàng"))
+                            run_rgb(define.YELLOW_COLOR);
+                        if (data.get(0).equals("pink") || data.get(0).equals("sáng hồng"))
+                            run_rgb(define.PINK_COLOR);
+                        if (data.get(0).equals("off") || data.get(0).equals("tắt"))
+                            run_rgb(define.BLACK_COLOR);
+                        if (data.get(0).equals("ring"))
+                            run_ring_led();
                     }
                 }
                 díplayGuidle();

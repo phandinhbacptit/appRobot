@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/bg_control_menu"
+    android:background="@drawable/background_voice_control"
     tools:context=".MainActivity">
-
+    /*Layout header above*/
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,69 +43,89 @@
             android:background="@drawable/ic_ble_off" />
 
     </RelativeLayout>
-
+    /*Layout line horizontal*/
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/layout_horizontal_line"
         android:background="@drawable/ic_thanhngang">
     </RelativeLayout>
-
+    /*Layout main content*/
     <RelativeLayout
-        android:id="@+id/layoutBottom"
+        android:id="@+id/layoutVoiceControl"
         android:layout_width="match_parent"
-        android:layout_height="347dp"
+        android:layout_height="match_parent"
         android:layout_alignBottom="@id/layout_horizontal_line"
-        android:layout_centerHorizontal="true"
         android:orientation="horizontal">
-
         <RelativeLayout
-            android:id="@+id/layoutVoiceControl"
-            android:layout_width="match_parent"
-            android:layout_height="347dp"
-            android:layout_centerHorizontal="true"
-            android:orientation="horizontal">
-
+            android:id="@+id/layoutMic"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="100dp"
+            android:orientation="vertical"
+            android:background="@drawable/ic_background_mic">
             <pl.droidsonroids.gif.GifImageView
-                android:id="@+id/btnShowAffectVoice"
+                android:id="@+id/btnGetVoice"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/none_voice" />
+                android:layout_marginBottom="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/mic"/>
         </RelativeLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/headerText"
-            android:text=""
-            android:textColor="#58FFFF"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/layoutMic"
             android:layout_marginTop="20dp"
-            android:textSize="30dp"
-            android:layout_centerHorizontal="true"/>
-
-        <ListView
-            android:id="@+id/listCommand"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textSpeech"
-            android:text="Hello World!"
-            android:textColor="#58FFFF"
-            android:textSize="30dp"
-            android:layout_marginTop="170dp"
-            android:layout_marginLeft="400dp"/>
-
-        <ImageButton
-            android:id="@+id/btnGetVoice"
-            android:layout_width="80dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="650dp"
-            android:layout_marginTop="130dp"
-            android:background="@drawable/mic" />
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="200dp"
+            android:layout_marginRight="70dp"
+            android:background="@drawable/ic_board_guidle">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/headerText"
+                android:text=""
+                android:textColor="#58FFFF"
+                android:layout_marginTop="20dp"
+                android:textSize="18dp"
+                android:layout_centerHorizontal="true"/>
+            <ListView
+                android:id="@+id/listCommand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textSpeech"
+                android:text=""
+                android:textColor="#ffffff"
+                android:textSize="30dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="130dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textWait"
+                android:text=""
+                android:textColor="#58FFFF"
+                android:textSize="25dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="130dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textTest"
+                android:text="Hello World!"
+                android:textColor="#ffF6FF"
+                android:textSize="30dp"
+                android:layout_marginTop="240dp"
+                android:layout_marginLeft="400dp"/>
+        </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

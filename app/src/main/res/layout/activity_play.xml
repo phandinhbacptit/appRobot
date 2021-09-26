@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background_mechanical"
+    android:background="@drawable/background_play"
     tools:context=".MainActivity">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="1dp"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/ic_text_mechanical"/>
+            android:background="@drawable/ic_text_play"/>
 
         <ImageButton
             android:id="@+id/btnConnBluePlay"
@@ -47,7 +47,6 @@
             android:background="@drawable/ic_thanhngang">
         </RelativeLayout>
     </RelativeLayout>
-
 
     <HorizontalScrollView
         android:layout_width="match_parent"
@@ -77,11 +76,11 @@
 
                 <LinearLayout
                     android:layout_width="435px"
-                    android:layout_height="460px"
+                    android:layout_height="520px"
                     android:id="@+id/control_layout"
                     android:layout_gravity="center"
                     android:layout_marginLeft="0dp"
-                    android:background="@drawable/ic_tab_ranzer"
+                    android:background="@drawable/ic_tab_dieukhien"
                     android:orientation="vertical">
 
                     <ImageView
@@ -91,7 +90,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="35dp"
                         android:padding="0dp"
-                        android:src="@drawable/ranzer_robot" />
+                        android:src="@drawable/icon_play" />
                 </LinearLayout>
             </LinearLayout>
 /*Layout for play music interface*/
@@ -121,11 +120,11 @@
                         android:src="@drawable/ic_hanger" />
                     <LinearLayout
                         android:layout_width="435px"
-                        android:layout_height="460px"
+                        android:layout_height="520px"
                         android:id="@+id/play_music_layout"
                         android:layout_gravity="center"
                         android:layout_marginLeft="0dp"
-                        android:background="@drawable/ic_tab_rvs"
+                        android:background="@drawable/ic_tab_choinhac"
                         android:orientation="vertical">
 
                         <ImageView
@@ -135,7 +134,7 @@
                             android:layout_gravity="center"
                             android:layout_marginTop="35dp"
                             android:padding="0dp"
-                            android:src="@drawable/ranzer_robot" />
+                            android:src="@drawable/icon_music" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -167,11 +166,11 @@
                         android:src="@drawable/ic_hanger" />
                     <LinearLayout
                         android:layout_width="435px"
-                        android:layout_height="460px"
+                        android:layout_height="520px"
                         android:id="@+id/voice_layout"
                         android:layout_gravity="center"
                         android:layout_marginLeft="0dp"
-                        android:background="@drawable/ic_tab_rvs"
+                        android:background="@drawable/ic_tab_dkgiongnoi"
                         android:orientation="vertical">
 
                         <ImageView
@@ -181,7 +180,7 @@
                             android:layout_gravity="center"
                             android:layout_marginTop="35dp"
                             android:padding="0dp"
-                            android:src="@drawable/ranzer_robot" />
+                            android:src="@drawable/icon_voicecontrol" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

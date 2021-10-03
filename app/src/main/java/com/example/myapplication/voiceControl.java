@@ -85,6 +85,40 @@ public class voiceControl extends AppCompatActivity {
             textHeader.setText("Ranzer không nghe rõ, thử nói!");
         }
     }
+    /*********************************Handle bluetooth connection******************************/
+    ServiceConnection musicConnection = new ServiceConnection()
+    {
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            classicBluetooth.LocalBinder binder = (classicBluetooth.LocalBinder) service;
+            blueVoiceControl = binder.getService();
+            stateBond = true;
+        }
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            stateBond = false;
+        }
+    };
+    private void check_connected() {
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    if (connectingBluetooth.getStateConnectedBlue()) {
+                        vcBlueConnection.setBackgroundResource(R.drawable.ic_ble_on);
+                        timer.cancel();
+                    } else {
+                        vcBlueConnection.setBackgroundResource(R.drawable.ic_ble_off);
+                    }
+                } catch (NullPointerException ex) {
+                }
+            }
+        };
+        if (timer != null)
+            timer.cancel();
+        timer = new Timer("Timer");
+        timer.schedule(timerTask, 0, 1000);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +133,7 @@ public class voiceControl extends AppCompatActivity {
                             | View.SYSTEM_UI_FLAG_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
             );
+        }
 //        voiceSignal = (pl.droidsonroids.gif.GifImageView)findViewById(R.id.btnShowAffectVoice);
         getVoice = (pl.droidsonroids.gif.GifImageView)findViewById(R.id.btnGetVoice);
         vcBlueConnection = (ImageButton)findViewById(R.id.btnConnVoiceBluetooth);
@@ -109,32 +144,9 @@ public class voiceControl extends AppCompatActivity {
         commandList = (ListView)findViewById(R.id.listCommand);
         test = (TextView)findViewById(R.id.textTest);
 
-        /*********************************Handle bluetooth connection******************************/
-        ServiceConnection musicConnection = new ServiceConnection()
-        {
-            @Override
-            public void onServiceConnected(ComponentName className, IBinder service) {
-                classicBluetooth.LocalBinder binder = (classicBluetooth.LocalBinder) service;
-                blueVoiceControl = binder.getService();
-                stateBond = true;
-            }
-            @Override
-            public void onServiceDisconnected(ComponentName name) {
-                stateBond = false;
-            }
-        };
-
         Intent intent = new Intent(this, classicBluetooth.class);
-
-        while (!state) {
-            state = bindService(intent, musicConnection, Context.BIND_AUTO_CREATE);
-        }
-        if (state) {
-            vcBlueConnection.setBackgroundResource(R.drawable.ic_ble_on);
-        }
-        else {
-            vcBlueConnection.setBackgroundResource(R.drawable.ic_ble_off);
-        }
+        bindService(intent, musicConnection, Context.BIND_AUTO_CREATE);
+        check_connected();
         /******************************************************************************************/
         SpeechRecognizer speechRecognizer;
         arrayAdapter = new ArrayAdapter<String>(this, R.layout.activity_list_command, R.id.textView, listDisplay);
@@ -149,6 +161,13 @@ public class voiceControl extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(voiceControl.this, play.class));
+            }
+        });
+        vcBlueConnection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                blueVoiceControl.statusConnect = false;
+                startActivity(new Intent(voiceControl.this, connectingBluetooth.class));
             }
         });
 
@@ -255,6 +274,5 @@ public class voiceControl extends AppCompatActivity {
 
             }
         });
-        }
     }
 }

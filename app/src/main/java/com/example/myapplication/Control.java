@@ -253,6 +253,7 @@ public class Control extends AppCompatActivity {
         textServo2.setTypeface(null, Typeface.BOLD);
         servo2 = (SeekBar) findViewById(R.id.sbServo2);
         soundSignal = (pl.droidsonroids.gif.GifImageView) findViewById(R.id.btnSound);
+        check_connected();
 
         /* Handle back button when clicked */
         backCtrBtn.setOnClickListener(new View.OnClickListener() {
@@ -273,9 +274,8 @@ public class Control extends AppCompatActivity {
 //                    startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE),1);
 //                    Toast.makeText(getApplicationContext(),"Bluetooth Turned ON",Toast.LENGTH_SHORT).show();
 //                }
-
+                blueControl.statusConnect = false;
                 startActivity(new Intent(Control.this, connectingBluetooth.class));
-                check_connected();
 //                delay(2000);
 //                PendingIntent pendingResult = createPendingResult(100, new Intent(), 0);
 //                Intent intent = new Intent(Control.this, classicBluetooth.class);

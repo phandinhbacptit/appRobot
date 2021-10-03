@@ -77,7 +77,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="60dp"
                 android:layout_marginRight="60dp"
-                android:background="@drawable/ic_control"/>
+                android:background="@drawable/ic_play"/>
         <!--- ____________Start layout Guidle________-->
             <ImageButton
                 android:id="@+id/btn_guidle"

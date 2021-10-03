@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background_voice_control"
+    android:background="@drawable/background_voicecontrol"
     tools:context=".MainActivity">
     /*Layout header above*/
     <RelativeLayout
@@ -30,7 +30,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="1dp"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/ic_text_control" />
+            android:background="@drawable/ic_text_voice" />
 
         <ImageButton
             android:id="@+id/btnConnVoiceBluetooth"
@@ -59,19 +59,15 @@
         android:orientation="horizontal">
         <RelativeLayout
             android:id="@+id/layoutMic"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
             android:layout_marginTop="50dp"
             android:layout_marginLeft="100dp"
-            android:orientation="vertical"
-            android:background="@drawable/ic_background_mic">
+            android:orientation="vertical">
             <pl.droidsonroids.gif.GifImageView
                 android:id="@+id/btnGetVoice"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:background="@drawable/mic"/>
         </RelativeLayout>
         <RelativeLayout
@@ -80,8 +76,8 @@
             android:layout_toRightOf="@+id/layoutMic"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:layout_marginLeft="200dp"
-            android:layout_marginRight="70dp"
+            android:layout_marginLeft="150dp"
+            android:layout_marginRight="90dp"
             android:background="@drawable/ic_board_guidle">
             <TextView
                 android:layout_width="wrap_content"

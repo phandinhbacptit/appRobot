@@ -54,7 +54,7 @@ public class classicBluetooth  extends Service {
     public static final int STATE_LISTEN = 1;
     public static final int STATE_CONNECTING = 2;
     public static final int STATE_CONNECTED = 3;
-    boolean statusConnect = false;
+    public boolean statusConnect = false;
 
     private ConnectBtThread mConnectThread;
     private static ConnectedBtThread mConnectedThread;
@@ -89,13 +89,8 @@ public class classicBluetooth  extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        if (!mBluetoothAdapter.isEnabled()) {
-            Toast.makeText(classicBluetooth.this, "Turn on bluetooth in your device", Toast.LENGTH_SHORT).show();
-            mBluetoothAdapter.getDefaultAdapter().enable();
-        }
         boolean state;
-        connectToDevice(BT_DEVICE);
+        //connectToDevice(BT_DEVICE);
         return START_STICKY;
     }
 
@@ -163,6 +158,23 @@ public class classicBluetooth  extends Service {
             }
         }
         return true;
+    }
+    public boolean connectToDevice(BluetoothDevice device) {
+        if (mState == STATE_CONNECTING) {
+            if (mConnectThread != null) {
+                mConnectThread.cancel();
+                mConnectThread = null;
+            }
+        }
+        if (mConnectedThread != null) {
+            mConnectedThread.cancel();
+            mConnectedThread = null;
+        }
+        mConnectThread = new ConnectBtThread(device);
+        toast("Connecting...");
+        mConnectThread.start();
+        setState(STATE_CONNECTING);
+        return false;
     }
 
     private void setState(int state)

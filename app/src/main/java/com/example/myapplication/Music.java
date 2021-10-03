@@ -21,6 +21,8 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Music extends AppCompatActivity {
     ImageButton MusicBackBtn, musicConnectBluetooth;
@@ -28,6 +30,7 @@ public class Music extends AppCompatActivity {
     View c_d_s, d_e_s, f_g_s, g_a_s, a_b_s;
     BluetoothAdapter bluetoothAdapter;
     private static final int REQUEST_ENABLE_BT = 1;
+    Timer timer;
 
     classicBluetooth bluemusic;
     boolean stateBond = false;
@@ -37,6 +40,40 @@ public class Music extends AppCompatActivity {
         if (bluemusic.getInstance() != null) {
             bluemusic.getInstance().write(define.cmdRunModule);
         }
+    }
+    ServiceConnection musicConnection = new ServiceConnection()
+    {
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            LocalBinder binder = (LocalBinder) service;
+            bluemusic = binder.getService();
+            stateBond = true;
+        }
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            stateBond = false;
+        }
+    };
+
+    private void check_connected() {
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    if (connectingBluetooth.getStateConnectedBlue()) {
+                        musicConnectBluetooth.setBackgroundResource(R.drawable.ic_ble_on);
+                        timer.cancel();
+                    } else {
+                        musicConnectBluetooth.setBackgroundResource(R.drawable.ic_ble_off);
+                    }
+                } catch (NullPointerException ex) {
+                }
+            }
+        };
+        if (timer != null)
+            timer.cancel();
+        timer = new Timer("Timer");
+        timer.schedule(timerTask, 0, 1000);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,36 +107,9 @@ public class Music extends AppCompatActivity {
         g_a_s = (View)findViewById(R.id.g_a_sound);
         a_b_s = (View)findViewById(R.id.a_b_sound);
 
-        ServiceConnection musicConnection = new ServiceConnection()
-        {
-            @Override
-            public void onServiceConnected(ComponentName className, IBinder service) {
-                LocalBinder binder = (LocalBinder) service;
-                bluemusic = binder.getService();
-                stateBond = true;
-            }
-            @Override
-            public void onServiceDisconnected(ComponentName name) {
-                stateBond = false;
-            }
-        };
-
         Intent intent = new Intent(this, classicBluetooth.class);
-        boolean state = false;
-        while (!state) {
-            state = bindService(intent, musicConnection, Context.BIND_AUTO_CREATE);
-        }
-//        if (stateBond == true) {
-            if (state) {
-                musicConnectBluetooth.setBackgroundResource(R.drawable.ic_ble_on);
-               // Toast.makeText(Music.this, "Connect successfull", Toast.LENGTH_LONG).show();
-            }
-            else {
-                musicConnectBluetooth.setBackgroundResource(R.drawable.ic_ble_off);
-                //Toast.makeText(Music.this, "Connect fail", Toast.LENGTH_LONG).show();
-            }
-//        }
-
+        bindService(intent, musicConnection, Context.BIND_AUTO_CREATE);
+        check_connected();
 
         MusicBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,15 +122,9 @@ public class Music extends AppCompatActivity {
         musicConnectBluetooth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startService(new Intent(Music.this, classicBluetooth.class));
-                if (bluemusic.get_state_blue_connect()) {
-                    musicConnectBluetooth.setBackgroundResource(R.drawable.ic_ble_on);
-                    Toast.makeText(Music.this, "Connect successfull", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    musicConnectBluetooth.setBackgroundResource(R.drawable.ic_ble_off);
-                    Toast.makeText(Music.this, "Connect fail", Toast.LENGTH_LONG).show();
-                }
+                bluemusic.statusConnect = false;
+                startActivity(new Intent(Music.this, connectingBluetooth.class));
+
             }
         });
 
@@ -201,48 +205,6 @@ public class Music extends AppCompatActivity {
                 run_tone(define.A_B);
             }
         });
-//        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-//        if (bluetoothAdapter == null) {
-//            Toast.makeText(Music.this,
-//                    "Bluetooth is not supported on this hardware platform",
-//                    Toast.LENGTH_LONG).show();
-//            finish();
-//            return;
-//        }
     }
-
-//    private void setup( )
-//    {
-//        Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
-//        if (pairedDevices.size() > 0) {
-//            for (BluetoothDevice device : pairedDevices) {
-//                if (device.getName().equals("Robox")) {
-//                    Toast.makeText(Music.this, "Start thread connect to bluetooth device", Toast.LENGTH_LONG).show();
-////                    if (myThreadConnectBTdevice == null) {
-////                        myThreadConnectBTdevice = new ThreadConnectBTdevice(device);
-////                    }
-////                    myThreadConnectBTdevice.start();
-////                    if (myThreadConnectBTdevice.getStatusConnect())
-////                        musicConnectBluetooth.setBackgroundResource(R.drawable.ic_ble_on);
-////                    else
-////                        musicConnectBluetooth.setBackgroundResource(R.drawable.ic_ble_off);
-//                }
-//            }
-//        }
-//    }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-//    {
-//        if (requestCode == REQUEST_ENABLE_BT) {
-//            if (resultCode == Activity.RESULT_OK) {
-//                setup();
-//            }
-//            else {
-//                Toast.makeText(this, "BlueTooth NOT enabled", Toast.LENGTH_SHORT).show();
-//                finish();
-//            }
-//        }
-//    }
 }
 

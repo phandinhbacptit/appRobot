@@ -104,7 +104,7 @@ public class voiceControl extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    if (connectingBluetooth.getStateConnectedBlue()) {
+                    if (blueVoiceControl.get_state_blue_connect()) {
                         vcBlueConnection.setBackgroundResource(R.drawable.ic_ble_on);
                         timer.cancel();
                     } else {
@@ -166,7 +166,7 @@ public class voiceControl extends AppCompatActivity {
         vcBlueConnection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                blueVoiceControl.statusConnect = false;
+                check_connected();
                 startActivity(new Intent(voiceControl.this, connectingBluetooth.class));
             }
         });

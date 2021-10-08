@@ -60,7 +60,7 @@ public class Music extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    if (connectingBluetooth.getStateConnectedBlue()) {
+                    if (bluemusic.get_state_blue_connect()) {
                         musicConnectBluetooth.setBackgroundResource(R.drawable.ic_ble_on);
                         timer.cancel();
                     } else {
@@ -122,12 +122,11 @@ public class Music extends AppCompatActivity {
         musicConnectBluetooth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bluemusic.statusConnect = false;
+                check_connected();
                 startActivity(new Intent(Music.this, connectingBluetooth.class));
 
             }
         });
-
         c_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,35 +169,30 @@ public class Music extends AppCompatActivity {
                 run_tone(define.B);
             }
         });
-
         c_d_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 run_tone(define.C_D);
             }
         });
-
         d_e_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 run_tone(define.D_E);
             }
         });
-
         f_g_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 run_tone(define.F_G);
             }
         });
-
         g_a_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 run_tone(define.G_A);
             }
         });
-
         a_b_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

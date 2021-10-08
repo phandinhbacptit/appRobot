@@ -43,7 +43,7 @@ public class play extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    if (connectingBluetooth.getStateConnectedBlue()) {
+                    if (bluePlay.get_state_blue_connect()) {
                         btn_connectBlue.setBackgroundResource(R.drawable.ic_ble_on);
                         timer.cancel();
                     } else {
@@ -115,7 +115,7 @@ public class play extends AppCompatActivity {
         btn_connectBlue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bluePlay.statusConnect = false;
+                check_connected();
                 startActivity(new Intent(play.this, connectingBluetooth.class));
             }
         });

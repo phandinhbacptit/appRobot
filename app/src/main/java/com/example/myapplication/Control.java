@@ -130,11 +130,13 @@ public class Control extends AppCompatActivity {
             @Override
             public void run() {
             try {
-                if (connectingBluetooth.getStateConnectedBlue()) {
+                if (blueControl.get_state_blue_connect()) {
+                    Log.i("TAG"," connectedr");
                     btnConnect.setBackgroundResource(R.drawable.ic_ble_on);
                     timer.cancel();
                 } else {
                     btnConnect.setBackgroundResource(R.drawable.ic_ble_off);
+                    Log.i("TAG"," not connect");
                 }
             } catch (NullPointerException ex) {
             }
@@ -208,7 +210,7 @@ public class Control extends AppCompatActivity {
 
         layout_joystick = (RelativeLayout) findViewById(R.id.layout_joystick);
 
-//        btnDance = (ImageButton)findViewById(R.id.btn_dance);
+        btnDance = (ImageButton)findViewById(R.id.btnDanceMode);
         btnLed = (ImageButton) findViewById(R.id.btn_ledRGB);
         btnLedMatrix = (ImageButton) findViewById(R.id.btn_ledmatrix);
         btnRingLed = (ImageButton) findViewById(R.id.btn_ringled);
@@ -270,48 +272,28 @@ public class Control extends AppCompatActivity {
         btnConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if(!bAdapter.isEnabled()){
-//                    startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE),1);
-//                    Toast.makeText(getApplicationContext(),"Bluetooth Turned ON",Toast.LENGTH_SHORT).show();
-//                }
-                blueControl.statusConnect = false;
+                check_connected();
                 startActivity(new Intent(Control.this, connectingBluetooth.class));
-//                delay(2000);
-//                PendingIntent pendingResult = createPendingResult(100, new Intent(), 0);
-//                Intent intent = new Intent(Control.this, classicBluetooth.class);
-//                intent.putExtra("requestCode", pendingResult);
-//                startService(intent);
-
-//                if (blueControl.get_state_blue_connect()) {
-//                    btnConnect.setBackgroundResource(R.drawable.ic_ble_on);
-//                    //Toast.makeText(Control.this, "Connect successfull", Toast.LENGTH_LONG).show();
-//                } else {
-//                    btnConnect.setBackgroundResource(R.drawable.ic_ble_off);
-//                    //Toast.makeText(Control.this, "Connect fail", Toast.LENGTH_LONG).show();
-//                }
             }
         });
 
-//        btnDance.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                for (int i = 0; i <= 255 ; i = i + 1 ) {
-//                    leftSpeed = -(255 - i);
-//                    rightSpeed = -(255 - i);
-//                    joyStick[6] = (byte) (leftSpeed & (byte) 0xff);
-//                    joyStick[7] = (byte) ((leftSpeed >> 8) & (byte) 0xff);
-//
-//                    joyStick[8] = (byte) (rightSpeed & (byte) 0xff);
-//                    joyStick[9] = (byte) ((rightSpeed >> 8) & (byte) 0xff);
-//                    if (myThreadConnected != null) {
-//                        myThreadConnected.write(joyStick);
-//                    }
-//                    for (int j = 0; j< 10000; j++) {
-//                        for (int k = 0; k < 2000; k++) {}
-//                    }
-//                }
-//            }
-//        });
+        btnDance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i <= 255 ; i = i + 1 ) {
+                    leftSpeed = -(255 - i);
+                    rightSpeed = -(255 - i);
+                    shareFunction.runJoystick(0, 0, 0, leftSpeed, rightSpeed);
+                    if (blueControl.getInstance() != null) {
+                        blueControl.getInstance().write(define.cmdRunModule);
+                    }
+                    for (int j = 0; j< 10000; j++) {
+                        for (int k = 0; k < 2000; k++) {}
+                    }
+
+                }
+            }
+        });
         btnLed.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 switch (ledColor) {
@@ -696,7 +678,7 @@ public class Control extends AppCompatActivity {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
                 charset = StandardCharsets.ISO_8859_1;
             }
-            Log.i("hhhh"," on BroadcastReceiver");
+            Log.i("TAG"," on BroadcastReceiver");
             state++;
             if (intent.getAction().equals(mBroadcastGetData)) {
                 String inputData = intent.getStringExtra("fbData");

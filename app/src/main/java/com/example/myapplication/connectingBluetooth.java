@@ -32,7 +32,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class connectingBluetooth extends AppCompatActivity {
-    ImageButton btnBack;
+    ImageButton btnCancle;
     classicBluetooth blueConnecting;
     boolean stateBond = false;
     Timer timer;
@@ -57,14 +57,21 @@ public class connectingBluetooth extends AppCompatActivity {
             public void run() {
             try {
                 if (blueConnecting.get_state_blue_connect()) {
-                     Log.i("hhhh","connected to the bluetooth Device");
+                     Log.i("TAG","connected to the bluetooth Device");
                      finish();
                      timer.cancel();
                      stateConnected = true;
                 }
                 else {
-                     blueConnecting.retry_connect();
-                     Log.i("hhhh","retry_connect");
+                    if(!bAdapter.isDiscovering()){
+                        //check BT permissions in manifest
+                        checkBTPermissions();
+                        bAdapter.startDiscovery();
+                        IntentFilter discoverDevicesIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+                        registerReceiver(mReceiver, discoverDevicesIntent);
+                    }
+                    blueConnecting.retry_connect();
+                    Log.i("TAG","retry_connect");
                 }
             }
             catch (NullPointerException ex) {
@@ -95,7 +102,7 @@ public class connectingBluetooth extends AppCompatActivity {
                     | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
             );
         }
-        btnBack = (ImageButton)findViewById(R.id.returnPrevious);
+        btnCancle = (ImageButton)findViewById(R.id.returnPrevious);
         deviceList = (ListView)findViewById(R.id.listDevice);
         arrayList = new ArrayList();
 
@@ -127,7 +134,7 @@ public class connectingBluetooth extends AppCompatActivity {
 
         if(bAdapter.isDiscovering()){
             bAdapter.cancelDiscovery();
-            Log.d("TAG", "btnDiscover: Canceling discovery.");
+            Log.i("TAG", "btnDiscover: Canceling discovery.");
             //check BT permissions in manifest
             checkBTPermissions();
             bAdapter.startDiscovery();
@@ -152,15 +159,22 @@ public class connectingBluetooth extends AppCompatActivity {
         mIntentFilter.addAction(mBroadcastGetData);
         Intent serviceIntent = new Intent(this, classicBluetooth.class);
         startService(serviceIntent);
-
         check_connected();
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        btnCancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                blueConnecting.stopService(serviceIntent);
+//                bAdapter = BluetoothAdapter.getDefaultAdapter();
+//                if(bAdapter.isDiscovering()){
+//                bAdapter.cancelDiscovery();
+//                stopService(serviceIntent);
+//                    Log.i("TAG", "btnDiscover: Canceling discovery.");
+//                }
+                Log.i("TAG", "btnDiscover: Distroy everything.");
                 finish();
-                stateConnected =  false;
-                bAdapter = BluetoothAdapter.getDefaultAdapter();
+//                unregisterReceiver(mReceiver);
+//                unregisterReceiver(mBroadcastReceiver1);
             }
         });
     }
@@ -191,32 +205,16 @@ public class connectingBluetooth extends AppCompatActivity {
 //                    Method m = device.getClass()
 //                            .getMethod("createBond", (Class[]) null);
 //                    m.invoke(device, (Object[]) null);
-
                     arrayList.add(device.getName() + "\n" + device.getAddress());
                     btArrayAdapter.notifyDataSetChanged();
                     blueConnecting.connectToDevice(device);
+                    bAdapter.cancelDiscovery();
+                    Log.i("TAG", "btnDiscover: Canceling discovery.");
                 }
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
-
-//            if (device.getName().equals("Robox")) {
-//                device.createBond();
-//                arrayList.add(device.getName() + "\n" + device.getAddress());
-//                btArrayAdapter.notifyDataSetChanged();
-//            }
-
-//            if (device.getName().equals("Robox")) {
-//                Log.i("TAG", " Robox FOUND.");
-//                Toast.makeText(connectingBluetooth.this, "Found Robox", Toast.LENGTH_SHORT).show();
-//                    try {
-//                        Method method = device.getClass().getMethod("createBond,", (Class[]) null);
-//                        method.invoke(device, (Object[]) null);
-//                    } catch  (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-            }
+        }
         }
     };
 
@@ -233,15 +231,15 @@ public class connectingBluetooth extends AppCompatActivity {
                 //3 cases:
                 //case1: bonded already
                 if (mDevice.getBondState() == BluetoothDevice.BOND_BONDED){
-                    Log.d("TAG", "BroadcastReceiver: BOND_BONDED.");
+                    Log.i("TAG", "BroadcastReceiver: BOND_BONDED.");
                 }
                 //case2: creating a bone
                 if (mDevice.getBondState() == BluetoothDevice.BOND_BONDING) {
-                    Log.d("TAG", "BroadcastReceiver: BOND_BONDING.");
+                    Log.i("TAG", "BroadcastReceiver: BOND_BONDING.");
                 }
                 //case3: breaking a bond
                 if (mDevice.getBondState() == BluetoothDevice.BOND_NONE) {
-                    Log.d("TAG", "BroadcastReceiver: BOND_NONE.");
+                    Log.i("TAG", "BroadcastReceiver: BOND_NONE.");
                 }
             }
         }

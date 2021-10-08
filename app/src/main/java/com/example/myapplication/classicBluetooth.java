@@ -159,6 +159,7 @@ public class classicBluetooth  extends Service {
         }
         return true;
     }
+
     public boolean connectToDevice(BluetoothDevice device) {
         if (mState == STATE_CONNECTING) {
             if (mConnectThread != null) {
@@ -215,6 +216,8 @@ public class classicBluetooth  extends Service {
     public boolean stopService(Intent name)
     {
         setState(STATE_NONE);
+        statusConnect = false;
+        toast("Stop service...");
         if (mConnectThread != null) {
             mConnectThread.cancel();
             mConnectThread = null;
@@ -223,7 +226,8 @@ public class classicBluetooth  extends Service {
             mConnectedThread.cancel();
             mConnectedThread = null;
         }
-        mBluetoothAdapter.cancelDiscovery();
+        if(mBluetoothAdapter.isDiscovering())
+            mBluetoothAdapter.cancelDiscovery();
         return super.stopService(name);
     }
 

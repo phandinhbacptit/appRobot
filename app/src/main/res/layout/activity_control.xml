@@ -75,7 +75,7 @@
                     android:layout_width="28pt"
                     android:layout_height="26pt"
                     android:layout_marginLeft="35dp"
-                    android:background="@drawable/ic_matrix" />
+                    android:background="@drawable/matrix_config" />
 
                     <ImageButton
                         android:id="@+id/btn_ledRGB"
@@ -102,7 +102,7 @@
                     android:layout_height="26pt"
                     android:layout_marginRight="100dp"
                     android:layout_marginTop="2dp"
-                    android:background="@drawable/ic_ring_led" />
+                    android:background="@drawable/ringled_config" />
 
                 <ImageButton
                     android:id="@+id/btn_buzzer"
@@ -237,7 +237,24 @@
                     android:background="@drawable/ic_line_mode" />
             </RelativeLayout>
             <!--- ______Stop layout Sound -line Mode________-->
+            <!--- _______Start layout Sound Line_______-->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/layoutDance"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="128dp"
+                android:layout_alignParentRight="true" >
 
+                <ImageButton
+                    android:id="@+id/btnDanceMode"
+                    android:layout_width="28pt"
+                    android:layout_height="26pt"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="1dp"
+                    android:background="@drawable/runaround_config" />
+            </RelativeLayout>
+            <!--- ______Stop layout Sound -line Mode________-->
         </RelativeLayout>
 
 
@@ -359,7 +376,7 @@
                 android:layout_width="75pt"
                 android:layout_height="18pt"
                 android:layout_marginTop="0dp"
-                android:layout_marginLeft="60dp"
+                android:layout_marginLeft="56dp"
                 android:background="@drawable/ic_read_color" />
             <TextView
                 android:id="@+id/text_color"
